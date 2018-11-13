@@ -122,3 +122,6 @@ alias dexec="docker exec -it"
 alias dstop="docker stop"
 alias drm="docker rm"
 alias drmi="docker rmi"
+
+#Variables from installer
+#Used to this rc file only
