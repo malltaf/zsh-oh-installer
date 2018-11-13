@@ -1,11 +1,6 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Name of your user for working directories
-  export USER_ZSH="dpopov"
-# Name of theme you use
-  export ZSH_DEFAULT_THEME="malltaf1"
-
 # Path to your oh-my-zsh installation.
   export ZSH="/home/$USER_ZSH/.oh-my-zsh"
 
