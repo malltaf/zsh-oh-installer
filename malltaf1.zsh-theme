@@ -1,7 +1,7 @@
 # Personalized!
 # OLD DALLAS THEME
 # Grab the current date (%D) and time (%T) wrapped in {}: {%D %T}
-MALLTAF_CURRENT_TIME_="%{$fg[white]%}[%{$fg[green]%}%D%{$reset_color%}/%{$fg[green]%}%T%{$fg[white]%}]%{$reset_color%}"
+MALLTAF_CURRENT_TIME_="%{$fg[white]%}[%{$fg[green]%}%D%{$reset_color%}/%{$fg[green]%}%D{%H:%M:%S}%{$fg[white]%}]%{$reset_color%}"
 # Grab the current version of ruby in use (via RVM): [ruby-1.8.7]
 if [ -e ~/.rvm/bin/rvm-prompt ]; then
   MALLTAF_CURRENT_RUBY_="%{$fg[white]%}[%{$fg[magenta]%}\$(~/.rvm/bin/rvm-prompt i v)%{$fg[white]%}]%{$reset_color%}"
