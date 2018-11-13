@@ -1,26 +1,31 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
-USER_ZSH='dpopov'
+
+# Name of your user for working directories
+  export USER_ZSH="dpopov"
+# Name of theme you use
+  export ZSH_DEFAULT_THEME="malltaf1"
+
 # Path to your oh-my-zsh installation.
-export ZSH="/home/$USER_ZSH/.oh-my-zsh"
+  export ZSH="/home/$USER_ZSH/.oh-my-zsh"
 
-# Set name of the theme to load. Optionally, if you set this to "random"
-# it'll load a random theme each time that oh-my-zsh is loaded.
+# Set name of the theme to load --- if set to "random", it will
+# load a random theme each time oh-my-zsh is loaded, in which case,
+# to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="malltaf1"
+ZSH_THEME="$ZSH_DEFAULT_THEME"
 
-# Set list of themes to load
-# Setting this variable when ZSH_THEME=random
-# cause zsh load theme from this variable instead of
-# looking in ~/.oh-my-zsh/themes/
-# An empty array have no effect
-#ZSH_THEME_RANDOM_CANDIDATES=( "aussiegeek" "dieter" "amuse" )
+# Set list of themes to pick from when loading at random
+# Setting this variable when ZSH_THEME=random will cause zsh to load
+# a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+# If set to an empty array, this variable will have no effect.
+# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
- CASE_SENSITIVE="true"
+# CASE_SENSITIVE="true"
 
-# Uncomment the following line to use hyphen-insensitive completion. Case
-# sensitive completion must be off. _ and - will be interchangeable.
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
 
 # Uncomment the following line to disable bi-weekly auto-update checks.
@@ -48,30 +53,24 @@ ZSH_THEME="malltaf1"
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
-# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
- ZSH_CUSTOM=/home/$USER_ZSH/.oh-my-zsh/custom/
+ZSH_CUSTOM=/home/$USER_ZSH/.oh-my-zsh/custom/
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Which plugins would you like to load?
+# Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  aws brew command-not-found debian docker encode64 fasd fast-syntax-highlighting git history history-substring-search last-working-dir osx sudo tig wd zsh-autosuggestions zsh-bash
+  aws command-not-found debian docker encode64 fasd fast-syntax-highlighting git history history-substring-search last-working-dir osx sudo tig wd zsh-autosuggestions
 )
-
-source ~/.zshrc
 source $ZSH/oh-my-zsh.sh
-source zsh-autosuggestions.zsh
-source zsh-syntax-highlighting.zsh
-source zsh-history-substring-search.zsh
-
-#mac
-#source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-#source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-#source /usr/local/share/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 autoload -U up-line-or-beginning-search
 autoload -U down-line-or-beginning-search
@@ -106,16 +105,19 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
+# alias zshconfig="mate ~/.zshrc"
+# alias ohmyzsh="mate ~/.oh-my-zsh"
 alias zshconfig="nano ~/.zshrc"
 export PATH="/usr/local/sbin:$PATH"
 alias p8="ping 8.8.8.8"
 alias pya="ping ya.ru"
 alias ohmyzsh="nano ~/.oh-my-zsh"
 alias n="nano"
+alias v="vim"
 alias dps="docker ps"
 alias dpsa="docker ps -a"
 alias dpsi="docker images"
-alias dstats="docker stats"
+alias dst="docker stats"
 alias drun="docker run -d"
 alias docoup="docker-compose up -d"
 alias docodown="docker-compose down"
@@ -125,7 +127,3 @@ alias dexec="docker exec -it"
 alias dstop="docker stop"
 alias drm="docker rm"
 alias drmi="docker rmi"
-alias sq="echo 'ssh squirrel -l dpopov';ssh squirrel -l dpopov"
-alias ra="echo 'ssh racoon -l dpopov';ssh racoon -l dpopov"
-alias ttl="echo 'sudo sysctl -w net.inet.ip.ttl=65';sudo sysctl -w net.inet.ip.ttl=65"
-#alias mc='. /usr/local/Cellar/midnight-commander/4.8.21/libexec/mc/mc-wrapper.sh'
