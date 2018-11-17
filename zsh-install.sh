@@ -36,7 +36,7 @@ done
 
 echo; echo "[$(($snumb-2))/$snumb] zshrc and theme";
 wget -O /Users/$USER/.oh-my-zsh/custom/themes/fatllama.zsh-theme https://raw.githubusercontent.com/malltaf/zsh/master/fatllama.zsh-theme
-wget -O /Users/$USER/.zshrc https://raw.githubusercontent.com/malltaf/zsh/master/.zshrc-linux
+wget -O /Users/$USER/.zshrc https://raw.githubusercontent.com/malltaf/zsh/master/zshrc/.zshrc-linux
 
 echo; echo "[$(($snumb-2))/$snumb] fast-syntax-highlighting";
 git clone https://github.com/zdharma/fast-syntax-highlighting.git ${ZSH_CUSTOM:-/Users/$USER/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
@@ -73,7 +73,7 @@ wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - 
 
 echo; echo "[$(($snumb-2))/$snumb] zshrc and theme";
 wget -O /Users/$USER/.oh-my-zsh/custom/themes/fatllama.zsh-theme https://raw.githubusercontent.com/malltaf/zsh/master/fatllama.zsh-theme
-wget -O /Users/$USER/.zshrc https://raw.githubusercontent.com/malltaf/zsh/master/.zshrc-mac
+wget -O /Users/$USER/.zshrc https://raw.githubusercontent.com/malltaf/zsh/master/zshrc/.zshrc-mac
 
 echo; echo "[$(($snumb-2))/$snumb] fast-syntax-highlighting";
 git clone https://github.com/zdharma/fast-syntax-highlighting.git ${ZSH_CUSTOM:-/Users/$USER/.oh-my-zsh/custom}/plugins/fast-syntax-highlighting
