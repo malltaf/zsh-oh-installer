@@ -1,12 +1,31 @@
 #!/bin/bash
+###############################################################
 
+function zshcheck(){ 
+    if [ $PKT_MGR == "brew" ]; then DIR=/usr/local/Cellar/zsh; else DIR=/usr/bin/zsh; fi
+    if ls ${DIR} &>/dev/null
+        then echo "Found zsh. Working."; else echo "Zsh not found, nothing to delete. Exit."; exit 1;
+    fi
+}
+function pwcheck (){
+# Get password
+    echo -n "Enter your user-with-sudo-rights password: "; read -s PASSWD; echo;
+    export PASSWD=$(echo $PASSWD)
+# Check sudo rights
+    sudo -k
+if sudo -lS &> /dev/null << EOF
+$PASSWD
+EOF
+    then echo "Correct password. Go on.";
+    else echo "Wrong password. Exit."; exit 1;
+fi
+}
 ###############################################################
 
 function getoh (){
     echo; echo "[$(($snumb-3))/$snumb] wget oh-my-zsh";
     wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 }
-
 ###############################################################
 
 function downloadmod (){
@@ -18,31 +37,21 @@ function downloadmod (){
     git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-history-substring-search
     echo; echo "[$(($snumb-2))/$snumb] zsh-autosuggestions";
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-
-    echo; read -p "[$(($snumb-1))/$snumb] Enter your favorite theme [default is robbyrussell, recommended is fatllama]: " ZSH_DEFAULT_THEME;
-    ZSH_DEFAULT_THEME=${ZSH_DEFAULT_THEME:-robbyrussell}
-    echo "Theme you entered is $ZSH_DEFAULT_THEME"; echo;
+    if [ $ZTHEME ]; then ZSH_DEFAULT_THEME=$ZTHEME; else
+        echo; read -p "[$(($snumb-1))/$snumb] Enter your preferred theme [default is robbyrussell, recommended is fatllama]: " ZSH_DEFAULT_THEME;
+        ZSH_DEFAULT_THEME=${ZSH_DEFAULT_THEME:-robbyrussell}
+    fi
+    echo "[$(($snumb-1))/$snumb] Theme you entered is $ZSH_DEFAULT_THEME"; echo;
 
     # Get and export username and theme
     sed -i.tmp "6s/^/export USER_ZSH=$(echo $USER)/" $HOME/.zshrc
     sed -i.tmp "7s/^/export ZSH_DEFAULT_THEME=$(echo $ZSH_DEFAULT_THEME)/" $HOME/.zshrc
     rm -rf $HOME/.zshrc.tmp
 }
-
 ###############################################################
 
 function ubuntu-install(){
-    # Get password
-    echo -n "Enter your user-with-sudo-rights password for one time: "; read -s PASSWD; echo;
-    # Check sudo rights
-    sudo -k
-if sudo -lS &> /dev/null << EOF
-$PASSWD
-EOF
-    then echo "Correct password. Go on.";
-    else echo "Wrong password. Exit."; exit 1;
-fi
-
+    pwcheck
     echo; echo "[$(($snumb-3))/$snumb] $PKT_MGR install";
     echo $PASSWD | sudo -S $PKT_MGR install -y zsh
     getoh
@@ -63,7 +72,6 @@ fi
     wget -O $HOME/.zshrc https://raw.githubusercontent.com/malltaf/zsh/master/zshrc/.zshrc-linux
     downloadmod
 }
-
 ###############################################################
 
 function mac-install(){
@@ -84,16 +92,51 @@ function mac-install(){
     wget -O $HOME/.zshrc https://raw.githubusercontent.com/malltaf/zsh/master/zshrc/.zshrc-mac
     downloadmod
 }
+###############################################################
 
+function linux-remove(){
+    echo $PASSWD | sudo -S $PKT_MGR remove -y zsh
+    echo $PASSWD | chsh -s `which bash`
+}
+function mac-remove(){
+    $PKT_MGR remove -y zsh
+    echo $PASSWD | sudo -S dscl -P $PASSWD . -create /Users/$USER UserShell `which bash`
+    rm -rf /usr/local/Cellar/zsh*
+}
+function zsh-remove(){
+    zshcheck
+    pwcheck
+    uninstall_oh_my_zsh 2> /dev/null
+    rm -rf ~/.oh*
+    rm -rf ~/.zsh*
+    if [ $PKT_MGR == "brew" ]; then mac-remove; else linux-remove; fi
+}
+###############################################################
+
+function wetry(){ echo "We will try $PKT_MGR as packet manager for $zshdo zsh"; }
 
 
 
 ###################### Here is the start ######################
+
+# Options -y: installation with all defaults; -t with argument: name of zsh theme
+# -y: Install zsh with oh-my-zsh AND 
+while getopts :yt: option
+do
+    case "${option}"
+    in
+        y) ZEASY=true;;
+        t) ZTHEME=${OPTARG};;
+        \? ) echo "Unknown option: -$OPTARG" >&2; exit 1;;
+        *  ) echo "Unimplemented option: -$OPTARG" >&2; exit 1;;
+    esac
+done
+
+
 # To remember your path
 pwd=$(pwd)
 # Give step numbers
 snumb=5
-
 # Determine OS platform
 UNAME=$(uname | tr "[:upper:]" "[:lower:]")
 # If Linux, try to determine specific distribution
@@ -108,23 +151,28 @@ if [ "$UNAME" == "linux" ]; then
 fi
 # For everything else (or if above failed), just use generic identifier
 [ "$DISTRO" == "" ] && export DISTRO=$UNAME
-unset UNAME
 
-# Installation process
+# Install/Uninstall
+while true; do
+    read -p "Do you want to install or uninstall ZSH? [1(I)/2(u)]: " iu
+    case $iu in
+        [1] | [Ii] | '' ) zshdo="install"; break;;
+        [2] | [Uu] ) zshdo="uninstall"; break;;
+        * ) echo "Please answer 1 or 2.";;
+    esac
+done
+
 echo "You use $DISTRO distribution"
 case "$DISTRO" in
     "darwin" ) 
-            PKT_MGR="brew"; echo "We will try $PKT_MGR as packet manager for install zsh"; echo; 
-            mac-install;;
+            PKT_MGR="brew"; wetry; if [ $zshdo == "install" ]; then mac-install; else zsh-remove; fi;;
     "ubuntu" | "Ubuntu" ) 
-            PKT_MGR="apt"; echo "We will try $PKT_MGR as packet manager for install zsh"; echo; 
-            ubuntu-install;;
+            PKT_MGR="apt"; wetry; if [ $zshdo == "install" ]; then ubuntu-install; else zsh-remove; fi;;
     "centos" ) 
-            PKT_MGR="yum"; echo "We will try $PKT_MGR as packet manager for install zsh"; echo; 
-            linux-install;; ################################################
+            PKT_MGR="yum"; wetry; if [ $zshdo == "install" ]; then centos-install; else zsh-remove; fi;; #
     * ) echo "Unknown OS, exit."; exit 1;;
 esac
-unset DISTRO
+unset UNAME DISTRO pwd PASSWD PKT_MGR zshdo snumb
 
+echo; echo; echo "Start the new session to changes to take effect.";
 
-echo; read -p "[$snumb/$snumb] Press ANYKEY to finish. Start the new session to changes to take effect.";
