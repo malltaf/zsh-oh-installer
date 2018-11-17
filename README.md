@@ -1,8 +1,8 @@
 # zsh installer
-zsh configurations for mac/ubuntu
+zsh with oh-my-zsh configurations for mac/ubuntu
 
 ## Installation
 To install just run the command
 ```
-wget -O - https://raw.githubusercontent.com/malltaf/zsh/master/zsh-start.sh | bash
+Still in work
 ```
