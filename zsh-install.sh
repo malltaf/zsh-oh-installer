@@ -2,8 +2,7 @@
 ###############################################################
 
 function zshcheck(){ 
-    [[ $PKT_MGR == "brew" ]] && DIR=/usr/local/Cellar/zsh || DIR=/usr/bin/zsh
-    ls ${DIR} &>/dev/null && echo "Found zsh. Go on." || { echo "Zsh not found, nothing to delete. Exit."; exit 1; }
+    { [[ $(which zsh) ]] &> /dev/null; } && echo "Found zsh. Go on." || { echo "Zsh not found, nothing to do. Exit."; exit 1; }
 }
 function pwcheck (){
 # Get password
@@ -16,6 +15,11 @@ $PASSWD
 EOF
     then echo "Correct password. Go on."; else echo "Wrong password. Exit."; exit 1;
 fi
+}
+function shcheck(){
+    grep -Fxq "$(which zsh)" /etc/shells && echo "Found zsh is /etc/shells." || \
+    { echo "zsh is not found in /etc/shells. Try to add."; \
+    echo $PASSWD | sudo -S sh -c "echo '$(which zsh)' | sudo tee -a /etc/shells"; } ################################which zsh$############
 }
 function thmenter(){
     echo; read -p "[$(($SNUMB-1))/$SNUMB] Enter your preferred theme [default is robbyrussell, recommended is fatllama]: " ZSH_DEFAULT_THEME;
@@ -51,11 +55,10 @@ function downloadmod (){
 ###############################################################
 #Find and replace the string that contains shell permissions
 function pamtosuf(){
-export NRPAM=$(awk '/pam_shells.so/{ print NR; exit }' /etc/pam.d/chsh)
-echo $PASSWD | grep -rl "pam_shells.so" /etc/pam.d/chsh | sudo -S xargs sed -i "$(echo $NRPAM)s/required/sufficient/g"
+    [[ $NRPAM != "" ]] && { echo $PASSWD | grep -rl "pam_shells.so" /etc/pam.d/chsh | sudo -S xargs sed -i "$(echo $NRPAM)s/required/sufficient/g"; }
 }
 function pamtoreq(){
-echo $PASSWD | grep -rl "pam_shells.so" /etc/pam.d/chsh | sudo -S xargs sed -i "$(echo $NRPAM)s/sufficient/required/g"
+    [[ $NRPAM != "" ]] && { echo $PASSWD | grep -rl "pam_shells.so" /etc/pam.d/chsh | sudo -S xargs sed -i "$(echo $NRPAM)s/sufficient/required/g"; }
 }
 ###############################################################
 
@@ -66,13 +69,16 @@ function ubuntu-install(){
     getoh
 
     echo; echo "[$(($SNUMB-3))/$SNUMB] change shell to zsh";
-    pamtosuf
-    echo $PASSWD | sudo -S chsh -s `which zsh` $USER;
+    shcheck
+
+    # If is not empty then change permissions for chsh
+    pamtosuf   
+    echo $PASSWD | sudo -S chsh -s $(which zsh) $USER;
     [[ $ZEASY ]] && echo "No root shell change" || {
         while true; do
             read -p "[$(($SNUMB-3))/$SNUMB] Do you want to change root shell too? [y/N]: " yn
             case $yn in
-                [yY] | [yY][Ee][Ss]  ) echo "[$(($SNUMB-3))/$SNUMB] sudo change root shell to zsh"; echo $PASSWD | sudo -S chsh -s `which zsh`; break;;
+                [yY] | [yY][Ee][Ss]  ) echo "[$(($SNUMB-3))/$SNUMB] sudo change root shell to zsh"; echo $PASSWD | sudo -S chsh -s $(which zsh); break;;
                 [nN] | [n|N][O|o] | '' ) echo "[$(($SNUMB-3))/$SNUMB] root shell stays default"; break;;
                 * ) echo "Please answer y[es] or N[o].";;
             esac
@@ -81,6 +87,7 @@ function ubuntu-install(){
     echo; echo "[$(($SNUMB-2))/$SNUMB] zshrc";
     wget -O $HOME/.zshrc https://raw.githubusercontent.com/malltaf/zsh/master/zshrc/.zshrc-linux
     downloadmod
+    # Back permissions for chsh
     pamtoreq
 }
 ###############################################################
@@ -98,7 +105,7 @@ function mac-install(){
     getoh
 
     echo; echo "[$(($SNUMB-3))/$SNUMB] change shell to brew zsh";
-    dscl . -create /Users/$USER UserShell `which zsh`
+    dscl . -create /Users/$USER UserShell $(which zsh)
     echo; echo "[$(($SNUMB-2))/$SNUMB] zshrc";
     wget -O $HOME/.zshrc https://raw.githubusercontent.com/malltaf/zsh/master/zshrc/.zshrc-mac
     downloadmod
@@ -108,13 +115,15 @@ function mac-install(){
 function linux-remove(){
     pamtosuf
     echo $PASSWD | sudo -S $PKT_MGR remove -y zsh;
-    echo $PASSWD | sudo -S chsh -s `which bash` $USER;
+    echo $PASSWD | sudo -S chsh -s $(which bash) $USER;
     pamtoreq
+    exit 0
 }
 function mac-remove(){
     $PKT_MGR remove -y zsh
-    echo $PASSWD | sudo -S dscl -P $PASSWD . -create /Users/$USER UserShell `which bash`
+    echo $PASSWD | sudo -S dscl -P $PASSWD . -create /Users/$USER UserShell $(which bash)
     rm -rf /usr/local/Cellar/zsh*
+    exit 0
 }
 function zsh-remove(){
     zshcheck
@@ -127,14 +136,16 @@ function zsh-remove(){
 ###############################################################
 
 function distroway(){
-    echo "You use $DISTRO distribution"
+    echo "You use $DISTRO distribution"    
+    # Number of the row for linux chsh
+    export NRPAM=$(awk '/pam_shells.so/{ print NR; exit }' /etc/pam.d/chsh)
     case "$DISTRO" in
         "darwin" ) 
                 PKT_MGR="brew"; wetry; if [[ $ZSHDO == "install" ]]; then mac-install; else zsh-remove; fi;;
         "ubuntu" | "Ubuntu" ) 
                 PKT_MGR="apt"; wetry; if [[ $ZSHDO == "install" ]]; then ubuntu-install; else zsh-remove; fi;;
-        "centos" ) 
-                PKT_MGR="yum"; wetry; if [[ $ZSHDO == "install" ]]; then centos-install; else zsh-remove; fi;; #
+        "centos" | "*centos*") 
+                PKT_MGR="yum"; wetry; if [[ $ZSHDO == "install" ]]; then ubuntu-install; else zsh-remove; fi;; ########## centos
         * ) echo "Unknown OS, exit."; exit 1;;
     esac
 }
@@ -173,6 +184,8 @@ UNAME=$(uname | tr "[:upper:]" "[:lower:]")
 }
 # For everything else (or if above failed), just use generic identifier
 [[ "$DISTRO" == "" ]] && export DISTRO=$UNAME
+# Cut first word
+export DISTRO=$(echo $DISTRO | cut -d" " -f1)
 # Install/Uninstall
 [[ $ZRMV ]] && { ZSHDO="uninstall"; distroway; } || {
 { [[ $ZEASY ]] || [[ $ZTHEME ]] && ZSHDO="install"; } || {
