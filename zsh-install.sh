@@ -19,10 +19,10 @@ fi
 function shcheck(){
     grep -Fxq "$(which zsh)" /etc/shells && echo "Found zsh is /etc/shells." || \
     { echo "zsh is not found in /etc/shells. Try to add."; \
-    echo $PASSWD | sudo -S sh -c "echo '$(which zsh)' | sudo tee -a /etc/shells"; } ################################which zsh$############
+    echo $PASSWD | sudo -S sh -c "echo '$(which zsh)' | sudo tee -a /etc/shells"; }
 }
 function thmenter(){
-    echo; read -p "[$(($SNUMB-1))/$SNUMB] Enter your preferred theme [default is robbyrussell, recommended is fatllama]: " ZSH_DEFAULT_THEME;
+    echo; read -p "Enter your preferred theme [default is robbyrussell, recommended is fatllama]: " ZSH_DEFAULT_THEME;
     ZSH_DEFAULT_THEME=${ZSH_DEFAULT_THEME:-robbyrussell}
 }
 function thmcheck(){
@@ -30,25 +30,25 @@ function thmcheck(){
     { echo "Found $ZTHEME theme. Accepted."; ZSH_DEFAULT_THEME=$ZTHEME; } || { echo "$ZTHEME theme not found."; thmenter; }
 }
 function getoh (){
-    echo; echo "[$(($SNUMB-3))/$SNUMB] wget oh-my-zsh";
+    echo; echo "Wget oh-my-zsh";
     wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 }
 ###############################################################
 
 function downloadmod (){
-    echo; echo "[$(($SNUMB-2))/$SNUMB] theme";
+    echo; echo "Download fatllama theme";
     wget -O ${ZSH_CUSTOM}/themes/fatllama.zsh-theme https://raw.githubusercontent.com/malltaf/zsh/master/fatllama.zsh-theme
-    echo; echo "[$(($SNUMB-2))/$SNUMB] fast-syntax-highlighting";
+    echo; echo "Download fast-syntax-highlighting";
     git clone https://github.com/zdharma/fast-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/fast-syntax-highlighting
-    echo; echo "[$(($SNUMB-2))/$SNUMB] history-substring-search";
+    echo; echo "Download history-substring-search";
     git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM}/plugins/zsh-history-substring-search
-    echo; echo "[$(($SNUMB-2))/$SNUMB] zsh-autosuggestions";
+    echo; echo "Download zsh-autosuggestions";
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
 
     { [[ $ZTHEME ]] && thmcheck; } || { [[ $ZEASY ]] && ZSH_DEFAULT_THEME="robbyrussell"; } || { thmenter; }
-    echo "[$(($SNUMB-1))/$SNUMB] Theme you entered is $ZSH_DEFAULT_THEME"; echo;
+    echo "Theme you entered is $ZSH_DEFAULT_THEME"; echo;
     # Get and export username and theme
-    sed -i.tmp "6s/^/export USER_ZSH=$(echo $USER)/" $HOME/.zshrc
+    sed -i.tmp "6s/^/export ZSH_USER=$(echo $USER)/" $HOME/.zshrc
     sed -i.tmp "7s/^/export ZSH_DEFAULT_THEME=$(echo $ZSH_DEFAULT_THEME)/" $HOME/.zshrc
     rm -rf $HOME/.zshrc.tmp
 }
@@ -62,13 +62,13 @@ function pamtoreq(){
 }
 ###############################################################
 
-function ubuntu-install(){
+function linux-install(){
     pwcheck
-    echo; echo "[$(($SNUMB-3))/$SNUMB] $PKT_MGR install";
+    echo; echo "Do $PKT_MGR install zsh";
     echo $PASSWD | sudo -S $PKT_MGR install -y zsh
     getoh
 
-    echo; echo "[$(($SNUMB-3))/$SNUMB] change shell to zsh";
+    echo; echo "Change shell to zsh";
     shcheck
 
     # If is not empty then change permissions for chsh
@@ -76,15 +76,15 @@ function ubuntu-install(){
     echo $PASSWD | sudo -S chsh -s $(which zsh) $USER;
     [[ $ZEASY ]] && echo "No root shell change" || {
         while true; do
-            read -p "[$(($SNUMB-3))/$SNUMB] Do you want to change root shell too? [y/N]: " yn
+            read -p "Do you want to change root shell too? [y/N]: " yn
             case $yn in
-                [yY] | [yY][Ee][Ss]  ) echo "[$(($SNUMB-3))/$SNUMB] sudo change root shell to zsh"; echo $PASSWD | sudo -S chsh -s $(which zsh); break;;
-                [nN] | [n|N][O|o] | '' ) echo "[$(($SNUMB-3))/$SNUMB] root shell stays default"; break;;
+                [yY] | [yY][Ee][Ss]  ) echo "Do sudo change root shell to zsh"; echo $PASSWD | sudo -S chsh -s $(which zsh); break;;
+                [nN] | [nN][Oo] | '' ) echo "Root shell stays default"; break;;
                 * ) echo "Please answer y[es] or N[o].";;
             esac
         done
     }
-    echo; echo "[$(($SNUMB-2))/$SNUMB] zshrc";
+    echo; echo "Download linux zshrc";
     wget -O $HOME/.zshrc https://raw.githubusercontent.com/malltaf/zsh/master/zshrc/.zshrc-linux
     downloadmod
     # Back permissions for chsh
@@ -98,15 +98,15 @@ function mac-install(){
     cd /usr/local/Cellar
     mkdir zsh zsh-completions 2> /dev/null
     cd $ZPWD
-    echo "[$(($SNUMB-3))/$SNUMB] make chown for brew (/usr/local/Cellar/zsh*)";
+    echo "Make chown for brew (/usr/local/Cellar/zsh*)";
     chown -R $(whoami):admin /usr/local/Cellar/zsh*
-    echo; echo "[$(($SNUMB-3))/$SNUMB] $PKT_MGR install";
+    echo; echo "Do $PKT_MGR install zsh";
     $PKT_MGR install -y zsh zsh-completions
     getoh
 
-    echo; echo "[$(($SNUMB-3))/$SNUMB] change shell to brew zsh";
+    echo; echo "Change shell to brew zsh";
     dscl . -create /Users/$USER UserShell $(which zsh)
-    echo; echo "[$(($SNUMB-2))/$SNUMB] zshrc";
+    echo; echo "Download macos zshrc";
     wget -O $HOME/.zshrc https://raw.githubusercontent.com/malltaf/zsh/master/zshrc/.zshrc-mac
     downloadmod
 }
@@ -117,13 +117,11 @@ function linux-remove(){
     echo $PASSWD | sudo -S $PKT_MGR remove -y zsh;
     echo $PASSWD | sudo -S chsh -s $(which bash) $USER;
     pamtoreq
-    exit 0
 }
 function mac-remove(){
     $PKT_MGR remove -y zsh
     echo $PASSWD | sudo -S dscl -P $PASSWD . -create /Users/$USER UserShell $(which bash)
     rm -rf /usr/local/Cellar/zsh*
-    exit 0
 }
 function zsh-remove(){
     zshcheck
@@ -138,19 +136,33 @@ function zsh-remove(){
 function distroway(){
     echo "You use $DISTRO distribution"    
     # Number of the row for linux chsh
-    export NRPAM=$(awk '/pam_shells.so/{ print NR; exit }' /etc/pam.d/chsh)
+    export NRPAM=$(awk '/pam_shells.so/{ print NR; exit }' /etc/pam.d/chsh) 2> /dev/null
     case "$DISTRO" in
         "darwin" ) 
-                PKT_MGR="brew"; wetry; if [[ $ZSHDO == "install" ]]; then mac-install; else zsh-remove; fi;;
+                PKT_MGR="brew"; echo "We will try $PKT_MGR as a packet manager for $ZSHDO zsh"
+                if [[ $ZSHDO == "install" ]]; then mac-install; else zsh-remove; fi
+                ;;
         "ubuntu" | "Ubuntu" ) 
-                PKT_MGR="apt"; wetry; if [[ $ZSHDO == "install" ]]; then ubuntu-install; else zsh-remove; fi;;
+                PKT_MGR="apt"; echo "We will try $PKT_MGR as a packet manager for $ZSHDO zsh"
+                if [[ $ZSHDO == "install" ]]; then linux-install; else zsh-remove; fi
+                ;;
         "centos" | "*centos*") 
-                PKT_MGR="yum"; wetry; if [[ $ZSHDO == "install" ]]; then ubuntu-install; else zsh-remove; fi;; ########## centos
+                PKT_MGR="yum"; echo "We will try $PKT_MGR as a packet manager for $ZSHDO zsh"
+                if [[ $ZSHDO == "install" ]]; then linux-install; else zsh-remove; fi
+                while true; do
+                    read -p "Make logout to changes to take effect. Do you want to logout now? This will close all opened applications. [y/N]: " lg
+                    case $lg in
+                        [yY] | [yY][Ee][Ss]  ) echo "Logout"; gnome-session-quit --no-prompt; break;;
+                        [nN] | [nN][Oo] | '' ) echo "You choose do not logout"; break;;
+                        * ) echo "Please answer y[es] or N[o].";;
+                    esac
+                done
+                ;; 
         * ) echo "Unknown OS, exit."; exit 1;;
     esac
+    echo; [[ $PKT_MGR != "yum" ]] && echo "Start the new session to changes to take effect."
+    unset DIR DISTRO NRPAM PASSWD PKT_MGR UNAME ZEASY ZPWD ZRMV ZSHDO ZTHEME lg iu yn
 }
-function wetry(){ echo "We will try $PKT_MGR as a packet manager for $ZSHDO zsh"; }
-
 
 ###################### Here is the start ######################
 
@@ -171,8 +183,6 @@ esac; done
 
 ZSH_CUSTOM=$HOME/.oh-my-zsh/custom
 
-# Give step numbers
-SNUMB=5
 # Determine OS platform
 UNAME=$(uname | tr "[:upper:]" "[:lower:]")
 # If Linux, try to determine specific distribution
@@ -187,8 +197,9 @@ UNAME=$(uname | tr "[:upper:]" "[:lower:]")
 # Cut first word
 export DISTRO=$(echo $DISTRO | cut -d" " -f1)
 # Install/Uninstall
-[[ $ZRMV ]] && { ZSHDO="uninstall"; distroway; } || {
-{ [[ $ZEASY ]] || [[ $ZTHEME ]] && ZSHDO="install"; } || {
+if [[ $ZRMV ]]; then ZSHDO="uninstall";
+elif [[ $ZEASY ]] || [[ $ZTHEME ]]; then ZSHDO="install";
+else
     while true; do
         read -p "Do you want to install or uninstall ZSH? [1(I)/2(u)]: " iu
         case $iu in
@@ -197,9 +208,6 @@ export DISTRO=$(echo $DISTRO | cut -d" " -f1)
             * ) echo "Please answer 1 or 2.";;
         esac
     done
-    }
-distroway;
-}
-
-unset DIR DISTRO NRPAM PASSWD PKT_MGR SNUMB UNAME ZEASY ZPWD ZRMV ZSHDO ZTHEME
-echo; echo; echo "Start the new session to changes to take effect.";
+fi
+distroway
+exit 0
