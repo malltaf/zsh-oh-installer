@@ -61,7 +61,7 @@ Aliases are prepared:
 `alias dstop="docker stop"`  
 `alias drm="docker rm"`  
 `alias drmi="docker rmi"`  
-You can delete aliases from the end of the ~/.zshrc file.
+You can remove these aliases from the end of the ~/.zshrc file.
 
 Also included a theme that I use: `fatllama`
 
