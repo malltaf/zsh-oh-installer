@@ -19,9 +19,9 @@ They are all in ~/.oh-my-zsh/custom/plugins/
 You can delete them and clear a plugin list in ~/.zshrc  
 
 Aliases are prepared:  
-`alias zshconfig="nano ~/.zshrc"  
-alias p8="ping 8.8.8.8"  
-alias pya="ping ya.ru"
+`alias zshconfig="nano ~/.zshrc"`  
+`alias p8="ping 8.8.8.8"`  
+`alias pya="ping ya.ru"
 alias ohmyzsh="nano ~/.oh-my-zsh"
 alias n="nano"
 alias v="vim"
@@ -37,7 +37,7 @@ alias docostop="docker-compose stop"
 alias dexec="docker exec -it"
 alias dstop="docker stop"
 alias drm="docker rm"
-alias drmi="docker rmi"`
+alias drmi="docker rmi"`  
 You can delete aliases from the end of ~/.zshrc file.
 
 ### Testing info
