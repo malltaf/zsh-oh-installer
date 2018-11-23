@@ -4,7 +4,7 @@
 function zshcheck(){ 
     { [[ $(which zsh) ]] &> /dev/null; } && echo "Found zsh. Go on." || { echo "Zsh not found, nothing to do. Exit."; exit 1; }
 }
-function pwcheck (){
+function pwcheck(){
 # Get password
     echo -n "Enter your user-with-sudo-rights password: "; read -s PASSWD; echo;
     export PASSWD=$(echo $PASSWD)
@@ -31,11 +31,11 @@ function thmcheck(){
 }
 
 ###############################################################
-function getoh (){
+function getoh(){
     echo; echo "Wget oh-my-zsh";
     wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 }
-function downloadmod (){
+function downloadmod(){
     echo; echo "Download fatllama theme";
     wget -O ${ZSH_CUSTOM}/themes/fatllama.zsh-theme https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/themes/fatllama.zsh-theme
     echo; echo "Download fast-syntax-highlighting";
@@ -48,7 +48,7 @@ function downloadmod (){
     { [[ $ZTHEME ]] && thmcheck; } || { [[ $ZEASY ]] && ZSH_DEFAULT_THEME="robbyrussell"; } || { thmenter; }
     echo "Theme you entered is $ZSH_DEFAULT_THEME"; echo;
     # Get and export username and theme
-    sed -i.tmp "6s/^/export ZSH_USER_M=$(echo $USER)/" $HOME/.zshrc
+    sed -i.tmp "6s/^/export ZSH_USER=$(echo $USER)/" $HOME/.zshrc
     sed -i.tmp "7s/^/export ZSH_DEFAULT_THEME=$(echo $ZSH_DEFAULT_THEME)/" $HOME/.zshrc
     rm -rf $HOME/.zshrc.tmp
 }
@@ -62,7 +62,7 @@ function pamtoreq(){
 }
 ###############################################################
 
-function linux-install(){
+function linuxinstall(){
     pwcheck
     echo; echo "Do $PKT_MGR install zsh";
     echo $PASSWD | sudo -S $PKT_MGR install -y zsh
@@ -92,7 +92,7 @@ function linux-install(){
 }
 ###############################################################
 
-function mac-install(){
+function macinstall(){
     # To remember your path
     ZPWD=$(pwd)
     cd /usr/local/Cellar
@@ -112,24 +112,24 @@ function mac-install(){
 }
 ###############################################################
 
-function linux-remove(){
+function linuxremove(){
     pamtosuf
     echo $PASSWD | sudo -S $PKT_MGR remove -y zsh;
     echo $PASSWD | sudo -S chsh -s $(which bash) $USER;
     pamtoreq
 }
-function mac-remove(){
+function macremove(){
     $PKT_MGR remove -y zsh
     echo $PASSWD | sudo -S dscl -P $PASSWD . -create /Users/$USER UserShell $(which bash)
     rm -rf /usr/local/Cellar/zsh*
 }
-function zsh-remove(){
+function zshremove(){
     zshcheck
     pwcheck
     uninstall_oh_my_zsh 2> /dev/null
     rm -rf ~/.oh*
     rm -rf ~/.zsh*
-    [[ $PKT_MGR == "brew" ]] && mac-remove || linux-remove
+    [[ $PKT_MGR == "brew" ]] && macremove || linuxremove
 }
 ###############################################################
 
@@ -140,15 +140,15 @@ function distroway(){
     case "$DISTRO" in
         "darwin" ) 
                 PKT_MGR="brew"; echo "We will try $PKT_MGR as a packet manager for $ZSHDO zsh"
-                if [[ $ZSHDO == "install" ]]; then mac-install; else zsh-remove; fi
+                if [[ $ZSHDO == "install" ]]; then macinstall; else zshremove; fi
                 ;;
         "ubuntu" | "Ubuntu" ) 
                 PKT_MGR="apt"; echo "We will try $PKT_MGR as a packet manager for $ZSHDO zsh"
-                if [[ $ZSHDO == "install" ]]; then linux-install; else zsh-remove; fi
+                if [[ $ZSHDO == "install" ]]; then linuxinstall; else zshremove; fi
                 ;;
         "centos" | "*centos*") 
                 PKT_MGR="yum"; echo "We will try $PKT_MGR as a packet manager for $ZSHDO zsh"
-                if [[ $ZSHDO == "install" ]]; then linux-install; else zsh-remove; fi
+                if [[ $ZSHDO == "install" ]]; then linuxinstall; else zshremove; fi
                 while true; do
                     read -p "Make logout to changes to take effect. Do you want to logout now? This will close all opened applications. [y/N]: " lg
                     case $lg in
