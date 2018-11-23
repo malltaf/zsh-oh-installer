@@ -26,9 +26,9 @@ Only installation is performed.
 `-r`: only deletion is performed.  
 *Script priority = 1 (highest);*  
 Example - this command will install all with the fatllama theme:  
-```bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama```  
+`bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama`  
 Example - because of the priority this command will only delete:  
-```bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama -r```
+`bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama -r`
 
 ## Included plugins 
 Simple plugins:  
