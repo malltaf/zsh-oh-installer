@@ -13,7 +13,7 @@ To install just run the commands
 wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh
 bash zsh-oh-installer.sh
 ```
-The script will ask for your **sudo password**. The password will need to be entered only once. This is required for correct installation. The password will be written to the variable, and then will be deleted along with the variable. You can check it out in the code.  
+The script will ask for your **sudo password** only once. This is required for correct installation. The password will be written to the variable, and then will be deleted along with the variable. You can check it out in the code.  
 Also it will clarify: remove or install, install for the root (only in Linux), which theme to install.  
 
 ### Installation options
