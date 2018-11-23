@@ -6,7 +6,7 @@ function zshcheck(){
 }
 function pwcheck(){
 # Get password
-    echo -n "Enter your user-with-sudo-rights password: "; read -s PASSWD; echo;
+    echo -n "[sudo] password for $USER: "; read -s PASSWD; echo;
     export PASSWD=$(echo $PASSWD)
 # Check sudo rights
 sudo -k
@@ -101,7 +101,7 @@ function macinstall(){
     echo "Make chown for brew (/usr/local/Cellar/zsh*)";
     chown -R $(whoami):admin /usr/local/Cellar/zsh*
     echo; echo "Do $PKT_MGR install zsh";
-    $PKT_MGR install -y zsh zsh-completions
+    $PKT_MGR install -y zsh
     getoh
 
     echo; echo "Change shell to brew zsh";
