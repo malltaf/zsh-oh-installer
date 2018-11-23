@@ -14,8 +14,8 @@ wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-in
 bash zsh-oh-installer.sh
 ```
 ### Installation options
-Script can install or remove zsh with oh-my-zsh. It will be asked at the first stage.
-You can use some options when calling the script:
+Script can install or remove zsh with oh-my-zsh. It will be asked at the first stage.  
+You can use some options when calling the script:  
 `-y`: installation with all defaults.  
 Install zsh with oh-my-zsh AND robbyrussell theme (if `-t` is empty) TO the user who runs (only for linux).  
 *Priority in the script = 3 (low).*  
