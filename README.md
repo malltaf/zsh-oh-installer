@@ -4,8 +4,7 @@ This is the Zsh installer along with the Oh-my-zsh for macOS/Ubuntu/CentOS.
 ## Getting started
 ### Prerequisites (from [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh))
 - Unix-like operating system (macOS or Linux)
-- `wget` should be installed
-- `git` should be installed
+- `wget` and `git` should be installed
 
 ### Installation
 To install just run the command
