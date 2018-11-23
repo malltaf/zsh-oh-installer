@@ -48,7 +48,7 @@ function downloadmod (){
     { [[ $ZTHEME ]] && thmcheck; } || { [[ $ZEASY ]] && ZSH_DEFAULT_THEME="robbyrussell"; } || { thmenter; }
     echo "Theme you entered is $ZSH_DEFAULT_THEME"; echo;
     # Get and export username and theme
-    sed -i.tmp "6s/^/export ZSH_USER=$(echo $USER)/" $HOME/.zshrc
+    sed -i.tmp "6s/^/export ZSH_USER_M=$(echo $USER)/" $HOME/.zshrc
     sed -i.tmp "7s/^/export ZSH_DEFAULT_THEME=$(echo $ZSH_DEFAULT_THEME)/" $HOME/.zshrc
     rm -rf $HOME/.zshrc.tmp
 }
