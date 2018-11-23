@@ -8,8 +8,7 @@ Still in work
 ```
 
 ### Miscellaneous info
-What configuration are included:
-
+What configuration are included:\n
 [fast-syntax-highlighting](https://github.com/zdharma/fast-syntax-highlighting)
 [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search)
 [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
