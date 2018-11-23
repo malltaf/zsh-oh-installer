@@ -14,13 +14,13 @@ Simple plugins:
 Plugins with download:  
 [fast-syntax-highlighting](https://github.com/zdharma/fast-syntax-highlighting)  
 [zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search)  
-[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions) 
+[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)  
 They are all in ~/.oh-my-zsh/custom/plugins/  
 You can delete them and clear a plugin list in ~/.zshrc  
 
-Aliases are prepared:
-`alias zshconfig="nano ~/.zshrc"
-alias p8="ping 8.8.8.8"
+Aliases are prepared:  
+`alias zshconfig="nano ~/.zshrc"  
+alias p8="ping 8.8.8.8"  
 alias pya="ping ya.ru"
 alias ohmyzsh="nano ~/.oh-my-zsh"
 alias n="nano"
