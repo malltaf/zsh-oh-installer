@@ -1,5 +1,5 @@
 # zsh-oh-installer
-Zsh with oh-my-zsh configurations for macOS/Ubuntu/CentOS
+This is the Zsh installer along with the Oh-my-zsh for macOS/Ubuntu/CentOS.  
 
 ## Getting started
 ### Prerequisites (from [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh))
