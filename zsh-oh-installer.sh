@@ -166,11 +166,8 @@ function distroway(){
 
 ###################### Here is the start ######################
 
-# Options -y: installation with all defaults; -t with argument: name of zsh theme; -r: remove - priority option;
-# -y: Install zsh with oh-my-zsh AND robbyrussell theme (if -t is empty) TO the user who runs (only for linux) WITH passwords prompt; 
-# -y: Priority in the script = 3 (low);
-# -t: do ONLY install; Priority in the script = 2 (high);
-# -r: do ONLY remove; Priority in the script = 1 (highest);
+# Options -y: with all defaults; -t with argument: name of zsh theme; -r: remove;
+
 while getopts :yrt: option; do
 case "${option}"
 in
