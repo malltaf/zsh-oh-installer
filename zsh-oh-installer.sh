@@ -167,7 +167,6 @@ function distroway(){
 ###################### Here is the start ######################
 
 # Options -y: with all defaults; -t with argument: name of zsh theme; -r: remove;
-
 while getopts :yrt: option; do
 case "${option}"
 in
