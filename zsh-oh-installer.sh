@@ -136,7 +136,7 @@ function zsh-remove(){
 function distroway(){
     echo "You use $DISTRO distribution"    
     # Number of the row for linux chsh
-    export NRPAM=$(awk '/pam_shells.so/{ print NR; exit }' /etc/pam.d/chsh) 2> /dev/null
+    [[ $DISTRO != darwin ]] && export NRPAM=$(awk '/pam_shells.so/{ print NR; exit }' /etc/pam.d/chsh) 2> /dev/null
     case "$DISTRO" in
         "darwin" ) 
                 PKT_MGR="brew"; echo "We will try $PKT_MGR as a packet manager for $ZSHDO zsh"
