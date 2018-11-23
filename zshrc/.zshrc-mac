@@ -83,6 +83,7 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 # User configuration
 
 # export MANPATH="/usr/local/man:$MANPATH"
+export PATH="/usr/local/sbin:$PATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -108,8 +109,8 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
 alias zshconfig="nano ~/.zshrc"
-export PATH="/usr/local/sbin:$PATH"
 alias p8="ping 8.8.8.8"
 alias pya="ping ya.ru"
 alias ohmyzsh="nano ~/.oh-my-zsh"
