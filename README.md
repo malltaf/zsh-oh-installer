@@ -8,17 +8,11 @@ This is the Zsh installer along with the Oh-my-zsh for macOS/Ubuntu/CentOS.
 - `git` should be installed
 
 ### Installation
-To install just run the commands
-```
-wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh
-bash zsh-oh-installer.sh
-```
-###### Or even easier
+To install just run the command
 ```
 bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)"
 ```
-The script will ask for your **sudo password** only once. This is required for correct installation. The password will be written to the variable, and then will be deleted along with the variable. You can check it out in the code.  
-Also it will clarify: remove or install, install for the root (only in Linux), which theme to install.  
+Also the script will clarify: remove or install, install for the root (only in Linux), which theme to install.  
 
 ### Installation options
 The script can install or remove zsh with oh-my-zsh. It will be asked at the first stage.  
@@ -31,9 +25,8 @@ Only installation is performed.
 *Script priority = 2 (high).*  
 `-r`: only deletion is performed.  
 *Script priority = 1 (highest);*  
-Example: `bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama`
-Example: `bash zsh-oh-installer.sh -y -t fatllama` - this command will install all with the fatllama theme.  
-Example: `bash zsh-oh-installer.sh -y -t fatllama -r` - because of the priority this command will only delete.    
+Example: `bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama` - this command will install all with the fatllama theme.  
+Example: `bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama -r` - because of the priority this command will only delete.  
 
 ## Included plugins 
 Simple plugins:  
