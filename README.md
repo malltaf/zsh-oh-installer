@@ -66,4 +66,4 @@ You can remove these aliases from the end of the ~/.zshrc file.
 Also included a theme that I use: `fatllama`
 
 ## Testing info
-Script tested on Ubuntu 18.04.1, CentOS 7.5.1804, macOS 10.14.1
+Script is tested on Ubuntu 18.04.1, CentOS 7.5.1804, macOS 10.14.1
