@@ -29,15 +29,15 @@ function thmcheck(){
     ls $HOME/.oh-my-zsh/themes/$ZTHEME.zsh-theme &>/dev/null || ls ${ZSH_CUSTOM}/themes/$ZTHEME.zsh-theme &>/dev/null && \
     { echo "Found $ZTHEME theme. Accepted."; ZSH_DEFAULT_THEME=$ZTHEME; } || { echo "$ZTHEME theme not found."; thmenter; }
 }
+
+###############################################################
 function getoh (){
     echo; echo "Wget oh-my-zsh";
     wget https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh -O - | zsh
 }
-###############################################################
-
 function downloadmod (){
     echo; echo "Download fatllama theme";
-    wget -O ${ZSH_CUSTOM}/themes/fatllama.zsh-theme https://raw.githubusercontent.com/malltaf/zsh/master/fatllama.zsh-theme
+    wget -O ${ZSH_CUSTOM}/themes/fatllama.zsh-theme https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/themes/fatllama.zsh-theme
     echo; echo "Download fast-syntax-highlighting";
     git clone https://github.com/zdharma/fast-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/fast-syntax-highlighting
     echo; echo "Download history-substring-search";
@@ -85,7 +85,7 @@ function linux-install(){
         done
     }
     echo; echo "Download linux zshrc";
-    wget -O $HOME/.zshrc https://raw.githubusercontent.com/malltaf/zsh/master/zshrc/.zshrc-linux
+    wget -O $HOME/.zshrc https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zshrc/.zshrc-linux
     downloadmod
     # Back permissions for chsh
     pamtoreq
@@ -107,7 +107,7 @@ function mac-install(){
     echo; echo "Change shell to brew zsh";
     dscl . -create /Users/$USER UserShell $(which zsh)
     echo; echo "Download macos zshrc";
-    wget -O $HOME/.zshrc https://raw.githubusercontent.com/malltaf/zsh/master/zshrc/.zshrc-mac
+    wget -O $HOME/.zshrc https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zshrc/.zshrc-mac
     downloadmod
 }
 ###############################################################
