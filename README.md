@@ -13,6 +13,9 @@ To install just run the commands
 wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh
 bash zsh-oh-installer.sh
 ```
+The script will ask for your sudo password. The password will need to be entered only once. This is required for correct installation.  
+Also it will clarify: remove or install; whether to install in the root; which theme to install.  
+
 ### Installation options
 The script can install or remove zsh with oh-my-zsh. It will be asked at the first stage.  
 You can use some options when calling the script:  
@@ -28,6 +31,7 @@ Example: `bash zsh-oh-installer.sh -y -t fatllama` - this command will install a
 Example: `bash zsh-oh-installer.sh -y -t fatllama -r` - because of the priority this command will only delete.  
 
 Also, the script will offer to install a shell for root (only in Linux).  
+
 ## Included plugins 
 Simple plugins:  
 `aws command-not-found debian docker encode64 fasd git history last-working-dir osx sudo tig wd`  
