@@ -21,23 +21,23 @@ You can delete them and clear a plugin list in ~/.zshrc
 Aliases are prepared:  
 `alias zshconfig="nano ~/.zshrc"`  
 `alias p8="ping 8.8.8.8"`  
-`alias pya="ping ya.ru"
-alias ohmyzsh="nano ~/.oh-my-zsh"
-alias n="nano"
-alias v="vim"
-alias dps="docker ps"
-alias dpsa="docker ps -a"
-alias dpsi="docker images"
-alias dst="docker stats"
-alias drun="docker run -d"
-alias docoup="docker-compose up -d"
-alias docodown="docker-compose down"
-alias docostart="docker-compose start"
-alias docostop="docker-compose stop"
-alias dexec="docker exec -it"
-alias dstop="docker stop"
-alias drm="docker rm"
-alias drmi="docker rmi"`  
+`alias pya="ping ya.ru"`  
+`alias ohmyzsh="nano ~/.oh-my-zsh"`  
+`alias n="nano"`  
+`alias v="vim"`  
+`alias dps="docker ps"`  
+`alias dpsa="docker ps -a"`  
+`alias dpsi="docker images"`  
+`alias dst="docker stats"`  
+`alias drun="docker run -d"`  
+`alias docoup="docker-compose up -d"`  
+`alias docodown="docker-compose down"`  
+`alias docostart="docker-compose start"`  
+`alias docostop="docker-compose stop"`  
+`alias dexec="docker exec -it"`  
+`alias dstop="docker stop"`  
+`alias drm="docker rm"`  
+`alias drmi="docker rmi"`  
 You can delete aliases from the end of ~/.zshrc file.
 
 ### Testing info
