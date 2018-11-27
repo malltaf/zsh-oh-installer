@@ -160,7 +160,7 @@ function distroway(){
                 ;; 
         * ) echo "Unknown OS, exit."; exit 1;;
     esac
-    echo; [[ $PKT_MGR != "yum" ]] && echo "Start the new session to changes to take effect."
+    echo; [[ $PKT_MGR != "yum" ]] && echo "Start the new session to changes to take effect."; echo "If nothing happened - please make logout to take effect.";
     unset DIR DISTRO NRPAM PASSWD PKT_MGR UNAME ZEASY ZPWD ZRMV ZSHDO ZTHEME lg iu yn
 }
 
