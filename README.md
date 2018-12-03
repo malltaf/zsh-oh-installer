@@ -11,7 +11,7 @@ To install just run the command
 ```
 bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)"
 ```
-Also the script will clarify: remove or install, install for the root (only in Linux), which theme to install.  
+Also the script will clarify: remove or install, which theme to install.  
 
 ### Installation options
 The script can install or remove zsh with oh-my-zsh. It will be asked at the first stage.  
