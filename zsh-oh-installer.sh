@@ -48,8 +48,8 @@ function downloadmod(){
     { [[ $ZTHEME ]] && thmcheck; } || { [[ $ZEASY ]] && ZSH_DEFAULT_THEME="robbyrussell"; } || { thmenter; }
     echo "Theme you entered is $ZSH_DEFAULT_THEME"; echo;
     # Get and export username and theme
-    sed -i.tmp "6s/^/export ZSH_USER_M=$(echo $USER)/" $HOME/.zshrc
-    sed -i.tmp "7s/^/export ZSH_DEFAULT_THEME=$(echo $ZSH_DEFAULT_THEME)/" $HOME/.zshrc
+    sed -i.tmp "6s|^|export ZSH_USER_M=$(echo $HOME)|" $HOME/.zshrc
+    sed -i.tmp "7s|^|export ZSH_DEFAULT_THEME=$(echo $ZSH_DEFAULT_THEME)|" $HOME/.zshrc
     rm -rf $HOME/.zshrc.tmp
 }
 ###############################################################
@@ -67,23 +67,15 @@ function linuxinstall(){
     echo; echo "Do $PKT_MGR install zsh";
     echo $PASSWD | sudo -S $PKT_MGR install -y zsh
     getoh
-
     echo; echo "Change shell to zsh";
     shcheck
-
     # If is not empty then change permissions for chsh
-    pamtosuf   
-    echo $PASSWD | sudo -S chsh -s $(which zsh) $USER;
-    [[ $ZEASY ]] && echo "No root shell change" || {
-        while true; do
-            read -p "Do you want to change root shell too? [y/N]: " yn
-            case $yn in
-                [yY] | [yY][Ee][Ss]  ) echo "Do sudo change root shell to zsh"; echo $PASSWD | sudo -S chsh -s $(which zsh); break;;
-                [nN] | [nN][Oo] | '' ) echo "Root shell stays default"; break;;
-                * ) echo "Please answer y[es] or N[o].";;
-            esac
-        done
-    }
+    pamtosuf
+    if [[ $EUID -ne 0 ]]; then
+        echo $PASSWD | sudo -S chsh -s $(which zsh) $USER;
+    else
+        echo $PASSWD | sudo -S chsh -s $(which zsh);
+    fi
     echo; echo "Download linux zshrc";
     wget -O $HOME/.zshrc https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zshrc/.zshrc-linux
     downloadmod
@@ -112,11 +104,13 @@ function macinstall(){
 }
 ###############################################################
 
-function linuxremove(){
+function linuxbash(){
     pamtosuf
-    echo $PASSWD | sudo -S $PKT_MGR remove -y zsh;
     echo $PASSWD | sudo -S chsh -s $(which bash) $USER;
     pamtoreq
+}
+function linuxremove(){
+    echo $PASSWD | sudo -S $PKT_MGR remove -y zsh;
 }
 function macremove(){
     $PKT_MGR remove -y zsh
@@ -129,44 +123,51 @@ function zshremove(){
     uninstall_oh_my_zsh 2> /dev/null
     rm -rf ~/.oh*
     rm -rf ~/.zsh*
-    [[ $PKT_MGR == "brew" ]] && macremove || linuxremove
+    if [[ $PKT_MGR != "brew" ]]; then
+        while true; do
+            read -p "Do you want to remove ZSH from the system? [Y/n]: " yns
+            case $yns in
+                [yY] | [yY][Ee][Ss] | '' ) linuxremove; break;;
+                [nN] | [nN][Oo] ) echo "Removed only oh-my-zsh."; break;;
+                * ) echo "Please answer y(es) or n(o).";;
+            esac
+        done
+        linuxbash
+    else
+        macremove
+    fi
 }
 ###############################################################
 
+function wetry(){
+    echo "We will try $1 as a packet manager for $ZSHDO zsh"
+}
 function distroway(){
     echo "You use $DISTRO distribution"    
     # Number of the row for linux chsh
     [[ $DISTRO != darwin ]] && export NRPAM=$(awk '/pam_shells.so/{ print NR; exit }' /etc/pam.d/chsh) 2> /dev/null
     case "$DISTRO" in
         "darwin" ) 
-                PKT_MGR="brew"; echo "We will try $PKT_MGR as a packet manager for $ZSHDO zsh"
+                PKT_MGR="brew"; wetry "$PKT_MGR"
                 if [[ $ZSHDO == "install" ]]; then macinstall; else zshremove; fi
                 ;;
         "ubuntu" | "Ubuntu" ) 
-                PKT_MGR="apt"; echo "We will try $PKT_MGR as a packet manager for $ZSHDO zsh"
+                PKT_MGR="apt"; wetry "$PKT_MGR"
                 if [[ $ZSHDO == "install" ]]; then linuxinstall; else zshremove; fi
                 ;;
         "centos" | "*centos*") 
-                PKT_MGR="yum"; echo "We will try $PKT_MGR as a packet manager for $ZSHDO zsh"
+                PKT_MGR="yum"; wetry "$PKT_MGR"
                 if [[ $ZSHDO == "install" ]]; then linuxinstall; else zshremove; fi
-                while true; do
-                    read -p "Make logout to changes to take effect. Do you want to logout now? This will close all opened applications. [y/N]: " lg
-                    case $lg in
-                        [yY] | [yY][Ee][Ss]  ) echo "Logout"; gnome-session-quit --no-prompt; break;;
-                        [nN] | [nN][Oo] | '' ) echo "You choose do not logout"; break;;
-                        * ) echo "Please answer y[es] or N[o].";;
-                    esac
-                done
                 ;; 
         * ) echo "Unknown OS, exit."; exit 1;;
     esac
-    echo; [[ $PKT_MGR != "yum" ]] && echo "Start the new session to changes to take effect."; echo "If nothing happened - please make logout to take effect.";
-    unset DIR DISTRO NRPAM PASSWD PKT_MGR UNAME ZEASY ZPWD ZRMV ZSHDO ZTHEME lg iu yn
+    echo; echo "Start the new session to changes to take effect."; echo "If the shell has not been changed - please logout/login to take effect.";
+    unset DIR DISTRO NRPAM PASSWD PKT_MGR UNAME ZEASY ZPWD ZRMV ZSHDO ZTHEME lg iu yn yns
 }
 
 ###################### Here is the start ######################
 
-# Options -y: with all defaults; -t with argument: name of zsh theme; -r: remove;
+# Options -y: with defaults; -t with argument: name of zsh theme; -r: remove;
 while getopts :yrt: option; do
 case "${option}"
 in
