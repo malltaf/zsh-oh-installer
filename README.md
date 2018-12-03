@@ -16,7 +16,7 @@ Also the script will clarify: remove or install, install for the root (only in L
 ### Installation options
 The script can install or remove zsh with oh-my-zsh. It will be asked at the first stage.  
 You can use some options when calling the script:  
-`-y`: installation with all defaults.  
+`-y`: installation with the fatllama theme.  
 Install zsh with oh-my-zsh AND robbyrussell theme (if `-t` is empty) TO the user who runs (only for Linux).  
 *Script priority = 3 (low).*  
 `-t <theme>`: allows you to immediately specify the theme of the program.  
@@ -24,10 +24,13 @@ Only installation is performed.
 *Script priority = 2 (high).*  
 `-r`: only deletion is performed.  
 *Script priority = 1 (highest);*  
-Example - this command will install all with the fatllama theme:  
-`bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama`  
+Example - this command will install all with the astm theme:  
+`bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t astm`  
 Example - because of the priority this command will only delete:  
-`bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama -r`
+`bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t astm -r`
+
+### Uninstallation
+You can delete the settings of a single user of the Linux system. In this case, you need not to delete "zsh", but you will need to logout/login.
 
 ## Included plugins 
 Simple plugins:  
