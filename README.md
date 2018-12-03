@@ -30,7 +30,7 @@ Example - because of the priority this command will only delete:
 `bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t astm -r`
 
 ### Uninstallation
-You can delete the settings of a single user of the Linux system. In this case, you need not to delete "zsh", but you will need to logout/login.
+You can delete the settings of a single user of the Linux system. In this case, you will need not to delete ZSH, but you will need to logout/login after the removal process is complete.
 
 ## Included plugins 
 Simple plugins:  
