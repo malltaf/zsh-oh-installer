@@ -1,4 +1,4 @@
-What it's looks like? Simple!
+What it's looks like? Simple!  
 Checks for ruby version, github branch and status, current time in the right place. Root/user input symbol.
 
 CentOS example:
