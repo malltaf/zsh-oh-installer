@@ -1,3 +1,4 @@
+## Description
 What it's looks like? Simple!  
 Checks for ruby version, github branch and status, current time and error number in the right place. Root/user input symbol. 
 
@@ -9,3 +10,13 @@ MacOS (iTerm2) example:
 
 Ubuntu Server (iTerm2) example:
 ![ubuntu](https://user-images.githubusercontent.com/7456824/51802731-cb529280-225d-11e9-85df-76374c0bec1c.jpg)
+
+## Installation
+You can download it to your ohmyzsh by commands:  
+```
+mkdir -p ${ZSH_CUSTOM}/lib && wget -O ${ZSH_CUSTOM}/lib/git.zsh https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/lib/git.zsh;
+wget -O ${ZSH_CUSTOM}/themes/fatllama.zsh-theme https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/themes/fatllama.zsh-theme
+```
+
+And then activate it in your .zshrc file: `fatllama`. And reload you zsh prompt.
+P.S. You will need uncomment string with ZSH_CUSTOM variable in .zshrc and choose the right way to it.
