@@ -1,5 +1,5 @@
 What it's looks like? Simple!  
-Checks for ruby version, github branch and status, current time in the right place. Root/user input symbol.
+Checks for ruby version, github branch and status, current time and error number in the right place. Root/user input symbol. 
 
 CentOS example:
 ![centos2](https://user-images.githubusercontent.com/7456824/51802852-fc7f9280-225e-11e9-91e6-1bb40b081ab2.jpg)
