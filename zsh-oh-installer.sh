@@ -46,7 +46,7 @@ function downloadmod(){
     git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM}/plugins/zsh-autosuggestions
 
     { [[ $ZTHEME ]] && thmcheck; } || { [[ $ZEASY ]] && ZSH_DEFAULT_THEME="robbyrussell"; } || { thmenter; }
-    [[ "$ZTHEME" = "fatllama" ]] && { wget -O ${ZSH_CUSTOM}/lib/git.zsh https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/lib/git.zsh; }
+    [[ "$ZTHEME" == "fatllama" ]] && { wget -O ${ZSH_CUSTOM}/lib/git.zsh https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/lib/git.zsh; }
     echo "Theme you entered is $ZSH_DEFAULT_THEME"; echo;
     # Get and export username and theme
     sed -i.tmp "6s|^|export ZSH_USER_M=$(echo $HOME)|" $HOME/.zshrc
