@@ -48,7 +48,7 @@ function downloadmod(){
     { [[ $ZTHEME ]] && thmcheck; } || { [[ $ZEASY ]] && ZSH_DEFAULT_THEME="robbyrussell"; } || { thmenter; }
     echo "Theme you entered is $ZSH_DEFAULT_THEME"; echo;
     # Get new git_promt_info function if theme is fatllama
-    [[ "$ZSH_DEFAULT_THEME" == "fatllama" ]] && { mkdir -p ${ZSH_CUSTOM}/lib; wget -O ${ZSH_CUSTOM}/lib/git.zsh https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/lib/git.zsh; }
+    [[ "$ZSH_DEFAULT_THEME" == "fatllama" ]] && { mkdir -p ${ZSH_CUSTOM}/lib && wget -O ${ZSH_CUSTOM}/lib/git.zsh https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/lib/git.zsh; }
     # Get and export username and theme
     sed -i.tmp "6s|^|export ZSH_USER_M=$(echo $HOME)|" $HOME/.zshrc
     sed -i.tmp "7s|^|export ZSH_DEFAULT_THEME=$(echo $ZSH_DEFAULT_THEME)|" $HOME/.zshrc
