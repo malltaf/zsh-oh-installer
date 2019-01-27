@@ -14,9 +14,9 @@ Ubuntu Server (iTerm2) example:
 ## Installation
 You can download it to your ohmyzsh by commands:  
 ```
-mkdir -p ${ZSH_CUSTOM}/lib && wget -O ${ZSH_CUSTOM}/lib/git.zsh https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/lib/git.zsh;
+mkdir -p ${ZSH_CUSTOM}/lib && wget -O ${ZSH_CUSTOM}/lib/git.zsh https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/lib/git.zsh
 wget -O ${ZSH_CUSTOM}/themes/fatllama.zsh-theme https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/themes/fatllama.zsh-theme
 ```
 
-And then activate it in your .zshrc file: `fatllama`. And reload you zsh prompt.
+And then activate it in your .zshrc file: `fatllama`. And reload you zsh prompt.  
 P.S. You will need uncomment string with ZSH_CUSTOM variable in .zshrc and choose the right way to it.
