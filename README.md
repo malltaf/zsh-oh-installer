@@ -25,7 +25,7 @@ Only installation is performed.
 `-r`: only deletion is performed.  
 *Script priority = 1 (highest);*  
 Example - this command will install all with the astm theme:  
-`bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t astm`  
+`bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama`  
 Example - because of the priority this command will only delete:  
 `bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t astm -r`
 
@@ -65,7 +65,7 @@ Aliases are prepared:
 `alias drmi="docker rmi"`  
 You can remove these aliases from the end of the ~/.zshrc file.
 
-Also included a theme that I use: `fatllama`
+Also included a theme that I use: [fatllama](https://github.com/malltaf/zsh-oh-installer/blob/master/themes/fatllama.md)
 
 ## Testing info
 Script is tested on Ubuntu 18.04.1, CentOS 7.5.1804, macOS 10.14.1
