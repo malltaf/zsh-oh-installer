@@ -8,9 +8,16 @@ else
     local user_symbol='%{$terminfo[bold]$FG[186]%}$%{$reset_color%}'
 fi
 
+if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -n "$SSH2_CLIENT" ]; then
+    local user_host='%{$FG[242]%}ssh-%{$reset_color%}%{$terminfo[bold]$FG[065]%}%n@%m:%{$reset_color%}'
+elif [[ $(ps -o comm= -p $PPID) == "sshd" ]] || [[ $(ps -o comm= -p $PPID) == "*/sshd" ]]; then
+    local user_host='%{$FG[242]%}ssh-%{$reset_color%}%{$terminfo[bold]$FG[065]%}%n@%m:%{$reset_color%}'
+else
+    local user_host='%{$terminfo[bold]$FG[065]%}%n@%m:%{$reset_color%}'
+fi
+
 local git_branch='$(git_prompt_info)%{$reset_color%}'
 local current_time="%{$FG[240]%}%D{%H:%M:%S}%{$reset_color%}"
-local user_host='%{$terminfo[bold]$FG[065]%}%n@%m:%{$reset_color%}'
 local current_dir='%{$terminfo[bold]$FG[074]%}%~%{$reset_color%}'
 
 local rvm_ruby=''
