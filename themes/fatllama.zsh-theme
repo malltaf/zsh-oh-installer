@@ -18,7 +18,7 @@ fi
 
 local git_branch='$(git_prompt_info)%{$reset_color%}'
 local current_time="%{$FG[240]%}%D{%H:%M:%S}%{$reset_color%}"
-local current_dir='%{$terminfo[bold]$FG[074]%}%~%{$reset_color%}'
+local current_dir='%{$terminfo[bold]$FG[074]%}${${PWD/#$HOME/~}%$(basename ${PWD/#$HOME/\~})}%{$reset_color%}%{$terminfo[bold]$FG[075]%}$(basename ${PWD/#$HOME/\~})%{$reset_color%}'
 
 local rvm_ruby=''
 if which rvm-prompt &> /dev/null; then
