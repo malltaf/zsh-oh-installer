@@ -5,15 +5,15 @@ local return_code="%(?..%{$FG[088]%}-%?-%{$reset_color%})"
 if [[ $UID -eq 0 ]]; then
     local user_symbol='%{$terminfo[bold]$FG[131]%}#%{$reset_color%}'
 else
-    local user_symbol='%{$terminfo[bold]$FG[186]%}$%{$reset_color%}'
+    local user_symbol='%{$terminfo[bold]$FG[230]%}»%{$reset_color%}'
 fi
 
 if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ] || [ -n "$SSH2_CLIENT" ]; then
-    local user_host='%{$FG[242]%}ssh-%{$reset_color%}%{$terminfo[bold]$FG[065]%}%n@%m:%{$reset_color%}'
+    local user_host='%{$FG[242]%}ssh-%{$reset_color%}' # %n@%m: - default^ %n - user, %m - host
 elif [[ $(ps -o comm= -p $PPID) == "sshd" ]] || [[ $(ps -o comm= -p $PPID) == "*/sshd" ]]; then
-    local user_host='%{$FG[242]%}ssh-%{$reset_color%}%{$terminfo[bold]$FG[065]%}%n@%m:%{$reset_color%}'
+    local user_host='%{$FG[242]%}ssh-%{$reset_color%}' # %{$terminfo[bold]$FG[065]%}<HERE>%{$reset_color%}
 else
-    local user_host='%{$terminfo[bold]$FG[065]%}%n@%m:%{$reset_color%}'
+    local user_host='%{$reset_color%}'
 fi
 
 local git_branch='$(git_prompt_info)%{$reset_color%}'
