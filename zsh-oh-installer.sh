@@ -157,6 +157,14 @@ function distroway(){
                 PKT_MGR="apt"; wetry "$PKT_MGR"
                 if [[ $ZSHDO == "install" ]]; then linuxinstall; else zshremove; fi
                 ;;
+        "debian" | "Debian" ) 
+                PKT_MGR="apt"; wetry "$PKT_MGR"
+                if [[ $ZSHDO == "install" ]]; then linuxinstall; else zshremove; fi
+                ;;
+        "armbian" | "Armbian" ) 
+                PKT_MGR="apt"; wetry "$PKT_MGR"
+                if [[ $ZSHDO == "install" ]]; then linuxinstall; else zshremove; fi
+                ;;
         "centos" | "*centos*") 
                 PKT_MGR="yum"; wetry "$PKT_MGR"
                 if [[ $ZSHDO == "install" ]]; then linuxinstall; else zshremove; fi
