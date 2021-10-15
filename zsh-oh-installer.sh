@@ -47,7 +47,7 @@ function downloadmod(){
     echo; echo "Download k";
     git clone https://github.com/supercrabtree/k ${ZSH_CUSTOM}/plugins/k
     # Set a less bright color for dir for k
-	sed -i 's/K_COLOR_DI="0;34"/K_COLOR_DI="0;94"/g' ${ZSH_CUSTOM}/plugins/k/k.sh
+    sed -i 's/K_COLOR_DI="0;34"/K_COLOR_DI="0;94"/g' ${ZSH_CUSTOM}/plugins/k/k.sh
 
     { [[ $ZTHEME ]] && thmcheck; } || { [[ $ZEASY ]] && ZSH_DEFAULT_THEME="robbyrussell"; } || { thmenter; }
     echo "Theme you entered is $ZSH_DEFAULT_THEME"; echo;
