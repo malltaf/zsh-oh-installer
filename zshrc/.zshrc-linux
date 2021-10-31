@@ -81,6 +81,14 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 
 # User configuration
 
+# echo "nameserver 8.8.8.8" | sudo tee -a /etc/resolv.conf &> /dev/null
+
+# Start Docker daemon automatically when logging in if not running.
+#RUNNING=`ps aux | grep dockerd | grep -v grep`
+#if [ -z "$RUNNING" ]; then
+#    sudo service docker start &>/dev/null
+#fi
+
 # export MANPATH="/usr/local/man:$MANPATH"
 export PATH="/usr/local/sbin:$PATH"
 
