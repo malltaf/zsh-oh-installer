@@ -70,7 +70,7 @@ Also included a theme that I use: [fatllama](https://github.com/malltaf/zsh-oh-i
 
 For install with other default tools:
 ```
-bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)"
+bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/allsoftinstall.sh -O -)"
 ```
 
 ## Testing info
