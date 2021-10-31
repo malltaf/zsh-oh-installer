@@ -19,9 +19,7 @@ function software(){
 	echo $PASSWD | sudo -S apt install -y xclip wget git curl;
 	echo $PASSWD | sudo -S curl https://getmic.ro | bash;
 	echo $PASSWD | sudo -S mv micro /usr/bin
-	sleep 1; echo "{
-    \"clipboard\": \"terminal\"
-}" > $HOME/.config/micro/settings.json
+	wget -O $HOME/.config/micro/settings.json https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/lib/micro/settings.json
 }
 
 function zsh-clean(){
