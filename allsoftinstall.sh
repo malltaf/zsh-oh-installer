@@ -19,9 +19,9 @@ function software(){
 	echo $PASSWD | sudo -S apt install -y xclip wget git curl;
 	echo $PASSWD | sudo -S curl https://getmic.ro | bash;
 	echo $PASSWD | sudo -S mv micro /usr/bin
-	echo "{
+	sleep 1; echo "{
     \"clipboard\": \"terminal\"
-}" > ~/.config/micro/settings.json
+}" > $HOME/.config/micro/settings.json
 }
 
 function zsh-clean(){
