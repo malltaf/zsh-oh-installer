@@ -63,9 +63,15 @@ Aliases are prepared:
 `alias dstop="docker stop"`  
 `alias drm="docker rm"`  
 `alias drmi="docker rmi"`  
+etc.
 You can remove these aliases from the end of the ~/.zshrc file.
 
 Also included a theme that I use: [fatllama](https://github.com/malltaf/zsh-oh-installer/blob/master/themes/fatllama.md)
 
+For install with other default tools:
+```
+bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)"
+```
+
 ## Testing info
-Script is tested on Ubuntu 18.04.1, CentOS 7.5.1804, macOS 10.14.1
+Script is tested on Ubuntu 20.04, CentOS 7.5.1804, macOS 10.14.1
