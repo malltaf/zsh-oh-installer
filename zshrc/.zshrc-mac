@@ -68,7 +68,7 @@ ZSH_CUSTOM=$ZSH_USER_M/.oh-my-zsh/custom/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  aws command-not-found debian docker encode64 fasd fast-syntax-highlighting git history history-substring-search last-working-dir osx sudo tig wd zsh-autosuggestions
+  aws command-not-found debian docker encode64 fasd zsh-syntax-highlighting git history history-substring-search last-working-dir osx sudo tig wd zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh
