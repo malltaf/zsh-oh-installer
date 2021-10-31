@@ -1,6 +1,17 @@
 #!/bin/bash
 ###############################################################
-source functions.sh
+function pwcheck(){
+# Get password
+    echo -n "[sudo] password for $USER: "; read -s PASSWD; echo;
+    export PASSWD=$(echo $PASSWD)
+# Check sudo rights
+sudo -k
+if sudo -lS &> /dev/null << EOF
+$PASSWD
+EOF
+    then echo "Correct password. Go on."; else echo "Wrong password. Exit."; exit 1;
+fi
+}
 
 function software(){
 	pwcheck
@@ -17,12 +28,9 @@ function zsh-clean(){
 	bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" $1 $2 $3 $4
 }
 
-function zsh-full(){
-	[[ -f ./zsh-oh-installer ]] && rm -rf ./zsh-oh-installer
-	git clone https://github.com/malltaf/zsh-oh-installer.git
-	/bin/bash zsh-oh-installer.sh - -y -t fatllama
-	rm -rf ./zsh-oh-installer
-}
+#function zsh-full(){
+#	bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama
+#}
 
 echo "1 - Install git/wget/micro etc";echo "2 - (Un)Install oh-my-zsh with plugins (wget and git is needed)";echo "3 - Install 1 and 2 (with default options)"
 while true; do
@@ -47,7 +55,7 @@ case "$INDO" in
 		            * ) echo "Please answer 1(default) or 2 or 3";;
 		        esac
 		     done;;
-	"all" )  software; zsh-full;;
+	"all" ) software; bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama;;
     * ) echo "Unknown error of choice, exit."; exit 1;;
 esac
 
