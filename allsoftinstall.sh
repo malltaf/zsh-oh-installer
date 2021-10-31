@@ -16,7 +16,7 @@ fi
 function software(){
 	pwcheck
 	echo $PASSWD | sudo -S apt update -y;
-	echo $PASSWD | sudo -S apt install -y xclip wget git;
+	echo $PASSWD | sudo -S apt install -y xclip wget git curl;
 	echo $PASSWD | sudo -S curl https://getmic.ro | bash;
 	echo $PASSWD | sudo -S mv micro /usr/bin
 	echo "{
