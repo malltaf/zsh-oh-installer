@@ -13,13 +13,20 @@ function software(){
 }" > ~/.config/micro/settings.json
 }
 
-ZSHCOMMAND(){
-	/bin/bash zsh-oh-installer.sh	
+function zsh-clean(){
+	bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" $1 $2 $3 $4
+}
+
+function zsh-full(){
+	[[ -f ./zsh-oh-installer ]] && rm -rf ./zsh-oh-installer
+	git clone https://github.com/malltaf/zsh-oh-installer.git
+	/bin/bash zsh-oh-installer.sh - -y -t fatllama
+	rm -rf ./zsh-oh-installer
 }
 
 echo "1 - Install git/wget/micro etc";echo "2 - (Un)Install oh-my-zsh with plugins (wget and git is needed)";echo "3 - Install 1 and 2 (with default options)"
 while true; do
-    read -p "[1/2/>3<]: " ae
+    read -p "(1/2/[3]): " ae
     case $ae in
         [1] ) INDO="apps"; break;;
         [2] ) INDO="zsh"; break;;
@@ -31,15 +38,16 @@ done
 case "$INDO" in
     "apps" ) software;;
     "zsh" )  while true; do
-		        read -p "Make your choice \n1 - Full installation with fatllama theme\n2 - Uninstall oh-my-zsh\n3 - Just run zsh-installer with choice\n[>1</2/3]: " iu
+				echo "1 - Full installation with fatllama theme"; echo "2 - Uninstall oh-my-zsh"; echo "3 - Just run zsh-installer with choice"
+		        read -p "Make your choice ([1]/2/3): " iu
 		        case $iu in
-		            [1] | '' ) ZSHCOMMAND - -y -t fatllama; break;;
-		            [2] ) ZSHCOMMAND - -r; break;;
-		            [3] ) ZSHCOMMAND; break;;
+		            [1] | '' ) zsh-clean - -y -t fatllama; break;;
+		            [2] ) zsh-clean - -r; break;;
+		            [3] ) zsh-clean; break;;
 		            * ) echo "Please answer 1(default) or 2 or 3";;
 		        esac
 		     done;;
-	"all" )  software; tes;;
+	"all" )  software; zsh-full;;
     * ) echo "Unknown error of choice, exit."; exit 1;;
 esac
 
