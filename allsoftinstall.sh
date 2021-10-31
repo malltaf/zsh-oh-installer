@@ -27,10 +27,6 @@ function zsh-clean(){
 	bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" $1 $2 $3 $4
 }
 
-#function zsh-full(){
-#	bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama
-#}
-
 echo "1 - Install git/wget/micro etc";echo "2 - (Un)Install oh-my-zsh with plugins (wget and git is needed)";echo "3 - Install 1 and 2 (with default options)"
 while true; do
     read -p "(1/2/[3]): " ae
