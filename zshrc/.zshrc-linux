@@ -138,4 +138,7 @@ alias drm="docker rm"
 alias drmi="docker rmi"
 alias ll="k -ah"
 alias llt="k -Aht"
+
+# Generate keys and upload pub to server.
+# Run command eval `ssh-agent -s`. Then check the keys with command ssh-add -l. If there is no key, then add it with command ssh-add ~/.ssh/identity. After that, execute command xclip -sel clip < ~/.ssh/identity.pub .
 alias ssha="eval `ssh-agent -s`"
