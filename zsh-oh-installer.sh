@@ -37,8 +37,8 @@ function getoh(){
 function downloadmod(){
     echo; echo "Download fatllama theme";
     wget -O ${ZSH_CUSTOM}/themes/fatllama.zsh-theme https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/themes/fatllama.zsh-theme
-    echo; echo "Download zsh-syntax-highlighting";
-	git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/zsh-syntax-highlighting
+    echo; echo "Download fast-syntax-highlighting";
+    git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git ${ZSH_CUSTOM}/plugins/fast-syntax-highlighting
     echo; echo "Download history-substring-search";
     git clone https://github.com/zsh-users/zsh-history-substring-search ${ZSH_CUSTOM}/plugins/zsh-history-substring-search
     echo; echo "Download zsh-autosuggestions";
