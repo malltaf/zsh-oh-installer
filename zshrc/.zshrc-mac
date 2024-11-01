@@ -1,10 +1,11 @@
+zmodload zsh/zprof
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Variables from installer
 # Used here only
 
-
+export ZSH_DEFAULT_THEME=fatllama
 
 # Path to your oh-my-zsh installation.
 export ZSH="$ZSH_USER_M/.oh-my-zsh"
@@ -68,7 +69,7 @@ ZSH_CUSTOM=$ZSH_USER_M/.oh-my-zsh/custom/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  aws command-not-found debian docker encode64 fasd zsh-syntax-highlighting git history history-substring-search last-working-dir osx sudo tig wd zsh-autosuggestions
+  command-not-found debian docker encode64 fasd fast-syntax-highlighting git history history-substring-search last-working-dir sudo tig wd zsh-autosuggestions k macos
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -81,9 +82,12 @@ bindkey "^[[A" up-line-or-beginning-search # Up
 bindkey "^[[B" down-line-or-beginning-search # Down
 
 # User configuration
-
+timezsh() {
+  maxTiming=()
+  shell=${1-$SHELL}
+  for i in $(seq 1 10); do maxTiming+=$(/usr/bin/time $shell -i -c exit) &>/dev/null; done
+}
 # export MANPATH="/usr/local/man:$MANPATH"
-export PATH="/usr/local/sbin:$PATH"
 
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
@@ -110,11 +114,11 @@ export PATH="/usr/local/sbin:$PATH"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-alias zshconfig="nano ~/.zshrc"
+alias zshconfig="micro ~/.zshrc"
 alias p8="ping 8.8.8.8"
 alias pya="ping ya.ru"
-alias ohmyzsh="nano ~/.oh-my-zsh"
 alias n="nano"
+alias m="micro"
 alias v="vim"
 alias dps="docker ps"
 alias dpsa="docker ps -a"
@@ -129,3 +133,7 @@ alias dexec="docker exec -it"
 alias dstop="docker stop"
 alias drm="docker rm"
 alias drmi="docker rmi"
+alias ll="k -ah"
+alias lll="k -Aht"
+alias java-15="export JAVA_HOME=`/usr/libexec/java_home -v 15`; java -version"
+alias java-8="export JAVA_HOME=`/usr/libexec/java_home -v 1.8`; java -version"
