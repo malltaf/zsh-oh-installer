@@ -5,17 +5,11 @@ if [[ -n "$CURSOR_AGENT" ]]; then
   return
 fi
 
-# Variables filled in by the installer.
-export ZSH_USER_M=__ZSH_USER_M__
-export ZSH_DEFAULT_THEME=__ZSH_DEFAULT_THEME__
-
 # Path to your oh-my-zsh installation.
-export ZSH="$ZSH_USER_M/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
-ZSH_THEME="$ZSH_DEFAULT_THEME"
-
-# Would you like to use another custom folder than $ZSH/custom?
-ZSH_CUSTOM=$ZSH_USER_M/.oh-my-zsh/custom/
+# Theme name filled in by the installer.
+ZSH_THEME="__ZSH_DEFAULT_THEME__"
 
 # Skip compaudit's fpath-permission scan (~60-100ms per shell start).
 # Safe on a single-user machine; remove on shared/multi-user boxes.
@@ -28,9 +22,7 @@ plugins=(
 )
 source $ZSH/oh-my-zsh.sh
 
-# Paste speed: see zshrc-linux for the full explanation. fsh sets MAXLENGTH=10000
-# on load, so these must come after oh-my-zsh.sh.
-ZSH_HIGHLIGHT_MAXLENGTH=1500
+# Skip the history-search-for-suggestion step right after a paste.
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
 
 # Root cause of slow pasting: oh-my-zsh's bracketed-paste-magic re-inserts pasted
@@ -58,23 +50,37 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 alias zshconfig="micro ~/.zshrc"
 alias p8="ping 8.8.8.8"
 alias pya="ping ya.ru"
-alias n="nano"
 alias m="micro"
-alias v="vim"
 alias dps="docker ps"
 alias dpsa="docker ps -a"
 alias dpsi="docker images"
-alias dst="docker stats"
-alias drun="docker run -d"
 alias dexec="docker exec -it"
-alias dstop="docker stop"
 alias drm="docker rm"
 alias drmi="docker rmi"
 alias ll="k -ah"
 alias llt="k -Aht"
-alias ssha='eval `ssh-agent -s`'
+
 alias java-15="export JAVA_HOME=\`/usr/libexec/java_home -v 15\`; java -version"
 alias java-8="export JAVA_HOME=\`/usr/libexec/java_home -v 1.8\`; java -version"
+
+# ssh-agent: auto-start on every shell, but only if the OS hasn't already given
+# us a working one (macOS Keychain-integrated agent, gnome-keyring on desktop
+# Linux). Only falls back to our own file-based agent (~/.ssh/agent.env, shared
+# across tabs) when nothing valid is already set — e.g. WSL, headless servers.
+_ssh_agent_ensure() {
+  [[ -n "$SSH_AUTH_SOCK" && -S "$SSH_AUTH_SOCK" ]] && return
+  local envfile="$HOME/.ssh/agent.env"
+  [[ -f "$envfile" ]] && source "$envfile"
+  if [[ -z "$SSH_AUTH_SOCK" || ! -S "$SSH_AUTH_SOCK" ]]; then
+    eval "$(ssh-agent -s)" >/dev/null
+    mkdir -p "$HOME/.ssh"
+    {
+      print -r -- "export SSH_AUTH_SOCK=$SSH_AUTH_SOCK"
+      print -r -- "export SSH_AGENT_PID=$SSH_AGENT_PID"
+    } >| "$envfile"
+  fi
+}
+_ssh_agent_ensure
 
 # fzf: fuzzy history (Ctrl+R), file find (Ctrl+T), cd (Alt+C).
 # Homebrew-free install generates ~/.fzf.zsh.

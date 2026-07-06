@@ -56,7 +56,9 @@ k you-should-use fast-syntax-highlighting` (+ `macos` on macOS).
   (apt on Debian; Homebrew-free clone on macOS)
 
 **Performance tuning baked into `.zshrc`:**
-- `ZSH_DISABLE_COMPFIX` to skip the compaudit scan
+- `ZSH_DISABLE_COMPFIX` to skip the compaudit scan (commented out by default on
+  Linux, since servers are more likely to be shared/multi-user boxes; left
+  enabled on macOS, a personal machine by default — uncomment/comment as needed)
 - a fix for slow bracketed pasting (oh-my-zsh's `bracketed-paste-magic`)
 - `git_current_branch` in the theme instead of `git status` on every prompt
 
@@ -71,11 +73,9 @@ its own timestamp — the password is **never** read, stored, or exported by the
 script.
 
 ## Testing
-Static checks (syntax + shellcheck):
-```
-./test.sh
-```
-Runtime: last verified on Ubuntu (WSL) and current macOS.
+No test tooling is shipped in the repo (a local `bash -n` + shellcheck script is
+used during development, gitignored). Runtime: last verified on Ubuntu (WSL) and
+current macOS.
 
 ## License
 GPL-3.0 (see [LICENSE](LICENSE)).

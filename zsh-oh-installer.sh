@@ -174,7 +174,7 @@ install_zshrc() {
   log "Downloading .zshrc for $OS"
   curl -fsSL "$url" -o "$HOME/.zshrc"
   # Fill installer placeholders (robust — no line-number-based sed injection).
-  sed -i.bak "s|__ZSH_USER_M__|$HOME|g; s|__ZSH_DEFAULT_THEME__|$theme|g" "$HOME/.zshrc"
+  sed -i.bak "s|__ZSH_DEFAULT_THEME__|$theme|g" "$HOME/.zshrc"
   rm -f "$HOME/.zshrc.bak"
   log "Theme set to: $theme"
 }
