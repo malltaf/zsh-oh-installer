@@ -78,31 +78,6 @@ alias ll="k -ah"
 alias llt="k -Aht"
 alias ssha='eval `ssh-agent -s`'
 
-export NVM_DIR="$HOME/.nvm"
-# Lazy-load nvm: sourcing nvm.sh eagerly costs ~300-400ms every shell start.
-# These stubs load the real nvm once, on first actual use, then get out of the way.
-_load_nvm() {
-  unset -f nvm node npm npx corepack _load_nvm
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-}
-for _nvm_cmd in nvm node npm npx corepack; do
-  eval "$_nvm_cmd() { _load_nvm; $_nvm_cmd \"\$@\"; }"
-done
-unset _nvm_cmd
-
-# Yandex Cloud CLI (only if present on this machine).
-if [ -f "$HOME/yandex-cloud/path.bash.inc" ]; then source "$HOME/yandex-cloud/path.bash.inc"; fi
-# yc's completion is huge (~160k lines); defer it to right after the first prompt
-# so it does not block shell startup.
-_load_yc_completion() {
-  add-zsh-hook -d precmd _load_yc_completion
-  [ -f "$HOME/yandex-cloud/completion.zsh.inc" ] && source "$HOME/yandex-cloud/completion.zsh.inc"
-}
-autoload -Uz add-zsh-hook
-add-zsh-hook precmd _load_yc_completion
-export YC_CLI_INITIALIZATION_SILENCE=true
-
 # fzf: fuzzy history (Ctrl+R), file find (Ctrl+T), cd (Alt+C). Debian/apt paths.
 [ -f /usr/share/doc/fzf/examples/key-bindings.zsh ] && source /usr/share/doc/fzf/examples/key-bindings.zsh
 [ -f /usr/share/doc/fzf/examples/completion.zsh ] && source /usr/share/doc/fzf/examples/completion.zsh

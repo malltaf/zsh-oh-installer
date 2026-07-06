@@ -76,18 +76,6 @@ alias ssha='eval `ssh-agent -s`'
 alias java-15="export JAVA_HOME=\`/usr/libexec/java_home -v 15\`; java -version"
 alias java-8="export JAVA_HOME=\`/usr/libexec/java_home -v 1.8\`; java -version"
 
-export NVM_DIR="$HOME/.nvm"
-# Lazy-load nvm: loads the real nvm.sh only on first use of node/npm/etc.
-_load_nvm() {
-  unset -f nvm node npm npx corepack _load_nvm
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-  [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
-}
-for _nvm_cmd in nvm node npm npx corepack; do
-  eval "$_nvm_cmd() { _load_nvm; $_nvm_cmd \"\$@\"; }"
-done
-unset _nvm_cmd
-
 # fzf: fuzzy history (Ctrl+R), file find (Ctrl+T), cd (Alt+C).
 # Homebrew-free install generates ~/.fzf.zsh.
 [ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"

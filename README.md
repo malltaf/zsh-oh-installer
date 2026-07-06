@@ -56,11 +56,13 @@ k you-should-use fast-syntax-highlighting` (+ `macos` on macOS).
   (apt on Debian; Homebrew-free clone on macOS)
 
 **Performance tuning baked into `.zshrc`:**
-- lazy-loaded `nvm` (saves ~300-400ms/start)
-- deferred, guarded Yandex Cloud completion (skipped if not present)
 - `ZSH_DISABLE_COMPFIX` to skip the compaudit scan
 - a fix for slow bracketed pasting (oh-my-zsh's `bracketed-paste-magic`)
 - `git_current_branch` in the theme instead of `git status` on every prompt
+
+This is the **generic** template (macOS + Ubuntu servers + WSL). A machine-specific
+personal variant (Yandex Cloud completion, lazy nvm, personal aliases, Ubuntu-only)
+lives in a separate private repo, `zsh-oh-installer-local`.
 
 ## Notes on sudo
 The script uses `sudo` only where required (package install, adding zsh to
