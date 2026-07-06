@@ -45,7 +45,6 @@ whether to remove the `zsh` package. On macOS the system `zsh` is left in place.
 
 **Plugins:** `command-not-found git last-working-dir sudo wd zsh-autosuggestions
 k you-should-use fast-syntax-highlighting` (+ `macos` on macOS).
-`fast-syntax-highlighting` is kept last on purpose (it wraps ZLE widgets).
 
 **Downloadable plugins/tools** (cloned from upstream at install time, not vendored):
 - [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
@@ -55,27 +54,9 @@ k you-should-use fast-syntax-highlighting` (+ `macos` on macOS).
 - [fzf](https://github.com/junegunn/fzf) — Ctrl+R history, Ctrl+T files, Alt+C cd
   (apt on Debian; Homebrew-free clone on macOS)
 
-**Performance tuning baked into `.zshrc`:**
-- `ZSH_DISABLE_COMPFIX` to skip the compaudit scan (commented out by default on
-  Linux, since servers are more likely to be shared/multi-user boxes; left
-  enabled on macOS, a personal machine by default — uncomment/comment as needed)
-- a fix for slow bracketed pasting (oh-my-zsh's `bracketed-paste-magic`)
-- `git_current_branch` in the theme instead of `git status` on every prompt
-
-This is the **generic** template (macOS + Ubuntu servers + WSL). A machine-specific
-personal variant (Yandex Cloud completion, lazy nvm, personal aliases, Ubuntu-only)
-lives in a separate private repo, `zsh-oh-installer-local`.
-
 ## Notes on sudo
 The script uses `sudo` only where required (package install, adding zsh to
 `/etc/shells`, `chsh`). It authenticates once via `sudo -v` and lets sudo manage
 its own timestamp — the password is **never** read, stored, or exported by the
 script.
 
-## Testing
-No test tooling is shipped in the repo (a local `bash -n` + shellcheck script is
-used during development, gitignored). Runtime: last verified on Ubuntu (WSL) and
-current macOS.
-
-## License
-GPL-3.0 (see [LICENSE](LICENSE)).
