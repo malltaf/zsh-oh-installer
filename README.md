@@ -1,77 +1,79 @@
 # zsh-oh-installer
-This is the Zsh installer along with the Oh-my-zsh for macOS/Ubuntu/CentOS.  
+
+Installer for **zsh + oh-my-zsh** with a curated, performance-tuned setup:
+plugins, the [fatllama](themes/fatllama.md) theme, and sane defaults.
+
+Supported platforms: **Ubuntu/Debian** and **macOS** (Homebrew-free).
 
 ## Getting started
-### Prerequisites (from [oh-my-zsh](https://github.com/robbyrussell/oh-my-zsh))
-- Unix-like operating system (macOS or Linux)
-- `wget` and `git` should be installed
 
-### Installation
-To install just run the command
+### Prerequisites
+- Ubuntu/Debian or macOS
+- `curl` and `git` (on macOS, `git` comes from Xcode Command Line Tools:
+  `xcode-select --install`)
+
+### Install
 ```
-bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/malltaf/zsh-oh-installer/main/zsh-oh-installer.sh)"
 ```
-Also the script will clarify: remove or install, which theme to install.  
+The script asks whether to install or uninstall and which theme to use.
 
-### Installation options
-The script can install or remove zsh with oh-my-zsh. It will be asked at the first stage.  
-You can use some options when calling the script:  
-`-y`: installation with the fatllama theme.  
-Install zsh with oh-my-zsh AND robbyrussell theme (if `-t` is empty) TO the user who runs (only for Linux).  
-*Script priority = 3 (low).*  
-`-t <theme>`: allows you to immediately specify the theme of the program.  
-Only installation is performed.  
-*Script priority = 2 (high).*  
-`-r`: only deletion is performed.  
-*Script priority = 1 (highest);*  
-Example - this command will install all with the astm theme:  
-`bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t fatllama`  
-Example - because of the priority this command will only delete:  
-`bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/zsh-oh-installer.sh -O -)" - -y -t astm -r`
+### Options
+| Flag | Meaning | Priority |
+|------|---------|----------|
+| `-y` | install with the `fatllama` theme, no prompts | low |
+| `-t <theme>` | install with the given theme | high |
+| `-r` | uninstall | highest |
+| `-h` | help | — |
 
-### Uninstallation by the script (-r)
-If you want you can delete the settings of a single user of the Linux system. In this case, you will need not to delete ZSH from system, but you will need to logout/login after the removal process is complete.
-
-## Included plugins 
-Simple plugins:  
-`aws command-not-found debian docker encode64 fasd git history last-working-dir osx sudo tig wd`  
-
-Downloadable plugins:  
-[fast-syntax-highlighting](https://github.com/zdharma/fast-syntax-highlighting)  
-[zsh-history-substring-search](https://github.com/zsh-users/zsh-history-substring-search)  
-[zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)  
-They are all in ~/.oh-my-zsh/custom/plugins/  
-You can delete them and clean them from the list of plugins in the ~/.zshrc    
-
-Aliases are prepared:  
-`alias zshconfig="nano ~/.zshrc"`  
-`alias p8="ping 8.8.8.8"`  
-`alias pya="ping ya.ru"`  
-`alias ohmyzsh="nano ~/.oh-my-zsh"`  
-`alias n="nano"`  
-`alias v="vim"`  
-`alias dps="docker ps"`  
-`alias dpsa="docker ps -a"`  
-`alias dpsi="docker images"`  
-`alias dst="docker stats"`  
-`alias drun="docker run -d"`  
-`alias docoup="docker-compose up -d"`  
-`alias docodown="docker-compose down"`  
-`alias docostart="docker-compose start"`  
-`alias docostop="docker-compose stop"`  
-`alias dexec="docker exec -it"`  
-`alias dstop="docker stop"`  
-`alias drm="docker rm"`  
-`alias drmi="docker rmi"`  
-etc.
-You can remove these aliases from the end of the ~/.zshrc file.
-
-Also included a theme that I use: [fatllama](https://github.com/malltaf/zsh-oh-installer/blob/master/themes/fatllama.md)
-
-For install with other default tools:
+Pass flags after `--`:
 ```
-bash -c "$(wget https://raw.githubusercontent.com/malltaf/zsh-oh-installer/master/allsoftinstall.sh -O -)"
+bash -c "$(curl -fsSL .../zsh-oh-installer.sh)" -- -y -t fatllama
+bash -c "$(curl -fsSL .../zsh-oh-installer.sh)" -- -r
 ```
 
-## Testing info
-Script is tested on Ubuntu 20.04, CentOS 7.5.1804, macOS 10.14.1
+### Install with base tools (git/curl/micro + micro config)
+```
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/malltaf/zsh-oh-installer/main/allsoftinstall.sh)"
+```
+
+### Uninstall
+`-r` removes oh-my-zsh and `~/.zshrc`, reverts the login shell to bash, and asks
+whether to remove the `zsh` package. On macOS the system `zsh` is left in place.
+
+## What it sets up
+
+**Plugins:** `command-not-found git last-working-dir sudo wd zsh-autosuggestions
+k you-should-use fast-syntax-highlighting` (+ `macos` on macOS).
+`fast-syntax-highlighting` is kept last on purpose (it wraps ZLE widgets).
+
+**Downloadable plugins/tools** (cloned from upstream at install time, not vendored):
+- [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
+- [fast-syntax-highlighting](https://github.com/zdharma-continuum/fast-syntax-highlighting)
+- [zsh-you-should-use](https://github.com/MichaelAquilina/zsh-you-should-use)
+- [k](https://github.com/supercrabtree/k)
+- [fzf](https://github.com/junegunn/fzf) — Ctrl+R history, Ctrl+T files, Alt+C cd
+  (apt on Debian; Homebrew-free clone on macOS)
+
+**Performance tuning baked into `.zshrc`:**
+- lazy-loaded `nvm` (saves ~300-400ms/start)
+- deferred, guarded Yandex Cloud completion (skipped if not present)
+- `ZSH_DISABLE_COMPFIX` to skip the compaudit scan
+- a fix for slow bracketed pasting (oh-my-zsh's `bracketed-paste-magic`)
+- `git_current_branch` in the theme instead of `git status` on every prompt
+
+## Notes on sudo
+The script uses `sudo` only where required (package install, adding zsh to
+`/etc/shells`, `chsh`). It authenticates once via `sudo -v` and lets sudo manage
+its own timestamp — the password is **never** read, stored, or exported by the
+script.
+
+## Testing
+Static checks (syntax + shellcheck):
+```
+./test.sh
+```
+Runtime: last verified on Ubuntu (WSL) and current macOS.
+
+## License
+GPL-3.0 (see [LICENSE](LICENSE)).

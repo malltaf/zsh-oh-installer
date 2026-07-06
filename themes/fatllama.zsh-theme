@@ -16,7 +16,9 @@ else
     local user_host='%{$reset_color%}'
 fi
 
-local git_branch='$(git_prompt_info)%{$reset_color%}'
+# Branch name only — no `git status --porcelain` on every prompt (fast in big repos).
+# git_current_branch is a core oh-my-zsh function (lib/git.zsh), always available.
+local git_branch='%{$FG[108]%}$(git_current_branch)%{$reset_color%}'
 local current_time="%{$FG[240]%}%D{%H:%M:%S}%{$reset_color%}"
 local current_dir='%{$terminfo[bold]$FG[074]%}${${PWD/#$HOME/~}%$(basename ${PWD/#$HOME/\~})}%{$reset_color%}%{$terminfo[bold]$FG[075]%}$(basename ${PWD/#$HOME/\~})%{$reset_color%}'
 
@@ -31,8 +33,3 @@ fi
 
 PROMPT="${user_host}${current_dir} %B${user_symbol}%b "
 RPROMPT="%B${return_code}%b ${rvm_ruby} ${git_branch} ${current_time}"
-
-ZSH_THEME_GIT_PROMPT_PREFIX=""
-ZSH_THEME_GIT_PROMPT_SUFFIX=""
-ZSH_THEME_GIT_PROMPT_DIRTY="%{$FG[167]%}"
-ZSH_THEME_GIT_PROMPT_CLEAN="%{$FG[022]%}"
