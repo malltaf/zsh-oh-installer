@@ -40,12 +40,11 @@ _paste_speedup_finish() {
 zstyle :bracketed-paste-magic paste-init _paste_speedup_init
 zstyle :bracketed-paste-magic paste-finish _paste_speedup_finish
 
-autoload -U up-line-or-beginning-search
-autoload -U down-line-or-beginning-search
-zle -N up-line-or-beginning-search
-zle -N down-line-or-beginning-search
-bindkey "^[[A" up-line-or-beginning-search # Up
-bindkey "^[[B" down-line-or-beginning-search # Down
+# Substring history search (matches anywhere in the line, not just the prefix) —
+# built into zsh, same semantics as the zsh-history-substring-search plugin
+# minus the match highlighting.
+bindkey "^[[A" history-search-backward # Up
+bindkey "^[[B" history-search-forward # Down
 
 # Aliases
 alias zshconfig="micro ~/.zshrc"
