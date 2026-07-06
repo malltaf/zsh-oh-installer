@@ -18,7 +18,7 @@ ZSH_DISABLE_COMPFIX="true"
 # Add wisely, as too many plugins slow down shell startup.
 # fast-syntax-highlighting MUST stay last (it wraps ZLE widgets).
 plugins=(
-  command-not-found git last-working-dir sudo wd zsh-autosuggestions k you-should-use macos fast-syntax-highlighting
+  command-not-found git last-working-dir sudo wd zsh-autosuggestions k you-should-use history-substring-search macos fast-syntax-highlighting
 )
 source $ZSH/oh-my-zsh.sh
 
@@ -39,11 +39,10 @@ _paste_speedup_finish() {
 zstyle :bracketed-paste-magic paste-init _paste_speedup_init
 zstyle :bracketed-paste-magic paste-finish _paste_speedup_finish
 
-# Substring history search (matches anywhere in the line, not just the prefix) —
-# built into zsh, same semantics as the zsh-history-substring-search plugin
-# minus the match highlighting.
-bindkey "^[[A" history-search-backward # Up
-bindkey "^[[B" history-search-forward # Down
+# history-substring-search plugin already tries to bind Up/Down via terminfo,
+# but pin explicitly too — terminfo detection isn't reliable in every terminal.
+bindkey "^[[A" history-substring-search-up # Up
+bindkey "^[[B" history-substring-search-down # Down
 
 # Aliases
 alias zshconfig="micro ~/.zshrc"
